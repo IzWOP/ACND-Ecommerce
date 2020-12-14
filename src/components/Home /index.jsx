@@ -5,12 +5,14 @@ import './index.scss';
 
 const Home = (props) => {
     const Istate = {
-        user: false
+        user: false,
+        setUser: null
     };
     const [user,
         setUser] = useState(Istate);
 		if (user===true) {
 			console.log('user');
+			console.log(setUser);
 		}
     return <div className='billboard'>
         <div className='container'>
