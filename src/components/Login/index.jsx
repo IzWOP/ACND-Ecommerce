@@ -23,7 +23,7 @@ const signUpSchema = yup
             .string()
             .email(),
         password: yup
-            .string()
+            .string().min(5)
             .required('Password is required'),
         passwordConfirmation: yup
             .string()
@@ -36,7 +36,7 @@ const signUpSchema = yup
 const LoginSchema = yup
     .object()
     .shape({
-        usernameInput: yup
+        emailInput: yup
             .string()
             .required(),
         passwordInput: yup
@@ -80,11 +80,7 @@ const SignUp = (props) => {
                 placeholder="Password"
                 type="password"
                 ref={register({
-                required: "required",
-                minLength: {
-                    value: 5,
-                    message: "min length is 5"
-                } 
+                required: "required"
             })}/> {errors.password && <p>{errors.password.message}</p>}
 
             <input
@@ -93,10 +89,6 @@ const SignUp = (props) => {
                 placeholder="Password"
                 ref={register({
                 required: "required",
-                minLength: {
-                    value: 5,
-                    message: "min length is 5"
-                }
             })}
                 type="password"/>
             {errors.passwordConfirmation && <span>Password does not match</span>}
