@@ -23,7 +23,8 @@ const signUpSchema = yup
             .string()
             .email(),
         password: yup
-            .string().min(5)
+            .string()
+            .min(5)
             .required('Password is required'),
         passwordConfirmation: yup
             .string()
@@ -33,7 +34,7 @@ const signUpSchema = yup
             ], 'Passwords must match')
             // createdOn: yup.date().default(function () {   return new Date(); }),
     });
-const LoginSchema = yup
+const signInSchema = yup
     .object()
     .shape({
         emailInput: yup
@@ -56,6 +57,7 @@ const SignUp = (props) => {
 
     return <section className="form-login">
         {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
+        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* register your input into the hook by invoking the "register" function */}
             <input
@@ -90,17 +92,21 @@ const SignUp = (props) => {
                 ref={register({
                 required: "required",
             })}
-                type="password"/>
-            {errors.passwordConfirmation && <span>Password does not match</span>}
+                type="password"/> {errors.passwordConfirmation && <span>Password does not match</span>}
 
             <input className='submit' type="submit"/>
         </form>
     </section>
 }
 
+const SignIn = (props) =>{
+    return <h2>Sign In</h2>
+}
+
 const Login = (props) => {
     return <section className='login'>
         <SignUp/>
+        <SignIn/>
     </section>
 }
 
