@@ -24,7 +24,7 @@ const signUpSchema = yup
             .email(),
         password: yup
             .string()
-            .min(5)
+            .min(1)
             .required('Password is required'),
         passwordConfirmation: yup
             .string()
@@ -45,12 +45,35 @@ const signInSchema = yup
             .required()
     });
 
+    const formFix = (formData)=> {
+        console.log(formData,'formfix');
+        const cleanData = {
+            'username':formData.email,
+            'password':formData.password,
+            'attributes': {
+                email: formData.email,
+
+            }
+
+        }
+        return cleanData
+    }
+
 const SignUp = (props) => {
     const {register, handleSubmit, watch, errors} = useForm({resolver: yupResolver(signUpSchema)});
-    const onSubmit = (data) => {
-        console.log(data)
-        console.log(errors);
+    const onSubmit = (formData) => {
+       const sendData = formFix(formData)
+        console.log(sendData, 'send data');
 
+        async function signUp() {
+            try {
+                const { user } = await Auth.signUp(sendData);
+                console.log(user);
+            } catch (error) {
+                console.log('error signing up:', error);
+            }
+        }
+        signUp()
     };
 
     // console.log(watch("email")); // watch input value by passing the name of it
