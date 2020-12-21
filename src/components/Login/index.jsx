@@ -34,6 +34,11 @@ const signUpSchema = yup
             ], 'Passwords must match')
             // createdOn: yup.date().default(function () {   return new Date(); }),
     });
+  const confirmSchema = yup.object().shape({
+        ConfirmationCode: yup
+            .string()
+            .required()
+    });
 const signInSchema = yup
     .object()
     .shape({
@@ -45,19 +50,19 @@ const signInSchema = yup
             .required()
     });
 
-    const formFix = (formData)=> {
-        console.log(formData,'formfix');
-        const cleanData = {
-            'username':formData.email,
-            'password':formData.password,
-            'attributes': {
-                email: formData.email,
-
-            }
+const formFix = (formData)=> {
+    console.log(formData,'formfix');
+    const cleanData = {
+        'username':formData.email,
+        'password':formData.password,
+        'attributes': {
+            email: formData.email,
 
         }
-        return cleanData
+
     }
+    return cleanData
+}
 
 const SignUp = (props) => {
     const {register, handleSubmit, watch, errors} = useForm({resolver: yupResolver(signUpSchema)});
@@ -68,10 +73,11 @@ const SignUp = (props) => {
         async function signUp() {
             try {
                 const { user } = await Auth.signUp(sendData);
-                console.log(user);
-            } catch (error) {
+                console.log(user)
+              } catch (error) {
                 console.log('error signing up:', error);
-            }
+              }
+        
         }
         signUp()
     };
@@ -122,6 +128,23 @@ const SignUp = (props) => {
     </section>
 }
 
+const ConfirmSignUp = (props) =>{
+  const {register, handleSubmit, errors} = useForm({resolver: yupResolver(confirmSchema)});
+const onSubmit = (formData) => {
+console.log(formData,'confirmation code');
+}
+return <section className='confirm'>
+<form onSubmit={handleSubmit(onSubmit)}>
+  <input
+    className='form-item'
+    name="ConfirmationCode"
+    placeholder="Confirmation Code"
+    ref={register}/> {errors.ConfirmationCode && <p>{errors.ConfirmationCode.message}</p>}
+    <input className='submit' type="submit"/>
+</form>
+</section>
+}
+
 const SignIn = (props) =>{
     return <h2>Sign In</h2>
 }
@@ -129,6 +152,7 @@ const SignIn = (props) =>{
 const Login = (props) => {
     return <section className='login'>
         <SignUp/>
+        <ConfirmSignUp/>
         <SignIn/>
     </section>
 }
