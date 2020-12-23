@@ -51,15 +51,14 @@ const signInSchema = yup
     });
 
 const formFix = (formData)=> {
-    console.log(formData,'formfix');
     const cleanData = {
         'username':formData.email,
         'password':formData.password,
         'attributes': {
             email: formData.email,
-
+            'custom:first_name':formData.firstName,
+            'custom:last_name':formData.lastName
         }
-
     }
     return cleanData
 }
@@ -68,8 +67,6 @@ const SignUp = (props) => {
     const {register, handleSubmit, watch, errors} = useForm({resolver: yupResolver(signUpSchema)});
     const onSubmit = (formData) => {
        const sendData = formFix(formData)
-        console.log(sendData, 'send data');
-
         async function signUp() {
             try {
                 const { user } = await Auth.signUp(sendData);
@@ -130,8 +127,18 @@ const SignUp = (props) => {
 
 const ConfirmSignUp = (props) =>{
   const {register, handleSubmit, errors} = useForm({resolver: yupResolver(confirmSchema)});
+  
+//   async function confirmSignUp() {
+//     try {
+//       //fix
+//       await Auth.confirmSignUp(username, code);
+//     } catch (error) {
+//         console.log('error confirming sign up', error);
+//     }
+// }
 const onSubmit = (formData) => {
 console.log(formData,'confirmation code');
+
 }
 return <section className='confirm'>
 <form onSubmit={handleSubmit(onSubmit)}>
