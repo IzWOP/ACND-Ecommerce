@@ -153,7 +153,33 @@ return <section className='confirm'>
 }
 
 const SignIn = (props) =>{
-    return <h2>Sign In</h2>
+    const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
+    const onSubmit = (formData) => {
+        console.log(formData,'confirmation code');
+
+    }
+    return <section className="form-login">
+        {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
+        <h2>Sign In</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+                className='form-item'
+                name="email"
+                placeholder="Email"
+                ref={register}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> {errors.email && <p>{errors.email.message}</p>}
+            <input
+                className='form-item'
+                name="password"
+                placeholder="Password"
+                type="password"
+                ref={register({
+                required: "required"
+            })}/> {errors.password && <p>{errors.password.message}</p>}
+
+            <input className='submit' type="submit"/>
+        </form>
+    </section>
 }
 
 const Login = (props) => {
