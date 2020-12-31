@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import {useForm} from "react-hook-form";
 import {Auth} from 'aws-amplify';
+import {Link} from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -65,12 +66,15 @@ const formFix = (formData)=> {
 
 const SignUp = (props) => {
     const {register, handleSubmit, watch, errors} = useForm({resolver: yupResolver(signUpSchema)});
+    const [emailState, setEmailState] = useState(null)
     const onSubmit = (formData) => {
        const sendData = formFix(formData)
         async function signUp() {
             try {
                 const { user } = await Auth.signUp(sendData);
                 console.log(user)
+                console.log(sendData.username)
+                setEmailState(sendData.username)
               } catch (error) {
                 console.log('error signing up:', error);
               }
@@ -127,7 +131,7 @@ const SignUp = (props) => {
 
 const ConfirmSignUp = (props) =>{
   const {register, handleSubmit, errors} = useForm({resolver: yupResolver(confirmSchema)});
-  
+  //set the email as state then use it for the confirmation. 
 //   async function confirmSignUp() {
 //     try {
 //       //fix
@@ -176,7 +180,7 @@ const SignIn = (props) =>{
                 ref={register({
                 required: "required"
             })}/> {errors.password && <p>{errors.password.message}</p>}
-
+            <Link to='/Login/ForgotPassword'> Forgot Password</Link>
             <input className='submit' type="submit"/>
         </form>
     </section>
@@ -184,7 +188,7 @@ const SignIn = (props) =>{
 
 const Login = (props) => {
     return <section className='login'>
-        <SignUp/>
+        <SignUp />
         <ConfirmSignUp/>
         <SignIn/>
     </section>
