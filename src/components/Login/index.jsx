@@ -65,8 +65,7 @@ const formFix = (formData)=> {
 }
 
 const SignUp = (props) => {
-    const {register, handleSubmit, watch, errors} = useForm({resolver: yupResolver(signUpSchema)});
-    const [emailState, setEmailState] = useState(null)
+    const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signUpSchema)});
     const onSubmit = (formData) => {
        const sendData = formFix(formData)
         async function signUp() {
@@ -74,17 +73,15 @@ const SignUp = (props) => {
                 const { user } = await Auth.signUp(sendData);
                 console.log(user)
                 console.log(sendData.username)
-                setEmailState(sendData.username)
+                props.updateUsername(sendData.username)
               } catch (error) {
+                props.updateUsername(null)
                 console.log('error signing up:', error);
               }
         
         }
         signUp()
     };
-
-    // console.log(watch("email")); // watch input value by passing the name of it
-
     return <section className="form-login">
         {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
         <h2>Sign Up</h2>
@@ -186,11 +183,42 @@ const SignIn = (props) =>{
     </section>
 }
 
+const ResendConfirmation = (props) =>{
+    const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
+    if(props !== null ){
+        //some function right here but more than likey there's going to be something right here if they sign in. Or just want to go to it directly.
+        console.log(props,"resendconfirmation props is not empty");
+    }
+async function resendConfirmationCode(formData) {
+    try {
+        await Auth.resendSignUp(formData);
+        console.log('code resent successfully');
+    } catch (err) {
+        console.log('error resending code: ', err);
+    }
+}
+return<section>
+    <form onSubmit={handleSubmit(resendConfirmationCode)}>
+        <input
+            className='form-item'
+            name="email"
+            placeholder="Email"
+            ref={register}
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> 
+            {errors.email && <p>{errors.email.message}</p>}
+    </form>
+</section>
+}
 const Login = (props) => {
+    const [emailState, setEmailState] = useState(null);
+    const updateUsername = (username)=>{
+        setEmailState(username);
+    }
     return <section className='login'>
-        <SignUp />
-        <ConfirmSignUp/>
-        <SignIn/>
+        <SignUp updateUsername={updateUsername}/>
+        <ConfirmSignUp {...emailState}/>
+        <SignIn updateUsername={updateUsername}/>
+        <ResendConfirmation {...emailState} />
     </section>
 }
 
