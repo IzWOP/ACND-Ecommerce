@@ -25,7 +25,7 @@ const signUpSchema = yup
             .email(),
         password: yup
             .string()
-            .min(1)
+            .min(8)
             .required('Password is required'),
         passwordConfirmation: yup
             .string()
@@ -43,12 +43,13 @@ const signUpSchema = yup
 const signInSchema = yup
     .object()
     .shape({
-        emailInput: yup
+        email: yup
             .string()
-            .required(),
-        passwordInput: yup
+            .required('Username is required'),
+        password: yup
             .string()
-            .required()
+            .min(8)
+            .required('Password is required')
     });
 
 const formFix = (formData)=> {
@@ -71,8 +72,7 @@ const SignUp = (props) => {
         async function signUp() {
             try {
                 const { user } = await Auth.signUp(sendData);
-                console.log(user)
-                console.log(sendData.username)
+                console.log(user,"signupUser")
                 props.updateUsername(sendData.username)
               } catch (error) {
                 props.updateUsername(null)
@@ -155,31 +155,40 @@ return <section className='confirm'>
 
 const SignIn = (props) =>{
     const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
-    const onSubmit = (formData) => {
+    const onSubmitSignIn = (formData) => {
         console.log(formData,'confirmation code');
+        console.log(formData.email)
 
+    // async function signIn() {
+    //     try {
+    //         const user = await Auth.signIn(username, password);
+    //     } catch (error) {
+    //         console.log('error signing in', error);
+    //     }
+    // }
+    // signIn();
     }
     return <section className="form-login">
         {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
         <h2>Sign In</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmitSignIn)}>
             <input
                 className='form-item'
                 name="email"
                 placeholder="Email"
                 ref={register}
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> {errors.email && <p>{errors.email.message}</p>}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> 
+                {errors.email && <p>{errors.email.message}</p>}
             <input
                 className='form-item'
                 name="password"
                 placeholder="Password"
                 type="password"
-                ref={register({
-                required: "required"
-            })}/> {errors.password && <p>{errors.password.message}</p>}
-            <Link to='/Login/ForgotPassword'> Forgot Password</Link>
+                ref={register} /> 
+            {errors.password && <p>{errors.password.message}</p>}
             <input className='submit' type="submit"/>
         </form>
+            <Link to='/Login/ForgotPassword'> Forgot Password</Link>
     </section>
 }
 
@@ -197,7 +206,7 @@ async function resendConfirmationCode(formData) {
         console.log('error resending code: ', err);
     }
 }
-return<section>
+return <section>
     <form onSubmit={handleSubmit(resendConfirmationCode)}>
         <input
             className='form-item'
@@ -206,13 +215,14 @@ return<section>
             ref={register}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> 
             {errors.email && <p>{errors.email.message}</p>}
+            <input className='submit' type="submit"/>
     </form>
 </section>
 }
 const Login = (props) => {
-    const [emailState, setEmailState] = useState(null);
+    const [emailState, setEmailState] = useState({});
     const updateUsername = (username)=>{
-        setEmailState(username);
+        setEmailState({username});
     }
     return <section className='login'>
         <SignUp updateUsername={updateUsername}/>
