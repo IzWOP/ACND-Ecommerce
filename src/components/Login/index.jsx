@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import {useForm} from "react-hook-form";
 import {Auth} from 'aws-amplify';
 import {Link} from 'react-router-dom';
@@ -36,6 +36,7 @@ const signUpSchema = yup
             // createdOn: yup.date().default(function () {   return new Date(); }),
     });
   const confirmSchema = yup.object().shape({
+      username: yup.string().email(),
         ConfirmationCode: yup
             .string()
             .required()
@@ -67,6 +68,7 @@ const formFix = (formData)=> {
 
 const SignUp = (props) => {
     const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signUpSchema)});
+    const [errorCaught, setError] = useState()
     const onSubmit = (formData) => {
        const sendData = formFix(formData)
         async function signUp() {
@@ -77,6 +79,7 @@ const SignUp = (props) => {
               } catch (error) {
                 props.updateUsername(null)
                 console.log('error signing up:', error);
+                setError(error)
               }
         
         }
@@ -115,7 +118,7 @@ const SignUp = (props) => {
             <input
                 className='form-item'
                 name="passwordConfirmation"
-                placeholder="Password"
+                placeholder="Confirm Password"
                 ref={register({
                 required: "required",
             })}
@@ -137,26 +140,53 @@ const ConfirmSignUp = (props) =>{
 //         console.log('error confirming sign up', error);
 //     }
 // }
+console.log("confirmation state",props.state);
 const onSubmit = (formData) => {
 console.log(formData,'confirmation code');
 
 }
-return <section className='confirm'>
-<form onSubmit={handleSubmit(onSubmit)}>
-  <input
-    className='form-item'
-    name="ConfirmationCode"
-    placeholder="Confirmation Code"
-    ref={register}/> {errors.ConfirmationCode && <p>{errors.ConfirmationCode.message}</p>}
-    <input className='submit' type="submit"/>
-</form>
-</section>
+if (props !== null || props!== undefined || props !== ''){
+    return <section className='confirm'>
+            <h3>Confirmation Code</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <h6>{props.username}</h6>
+             <input
+                    className='form-item'
+                    name="Username"
+                    value={props.username}
+                    /> {errors.username && <p>{errors.username.message}</p>}
+        <input
+            className='form-item'
+            name="ConfirmationCode"
+            placeholder="Confirmation Code"
+            ref={register}/> {errors.ConfirmationCode && <p>{errors.ConfirmationCode.message}</p>}
+            <input className='submit' type="submit"/>
+        </form>
+        </section>
+        } else {
+
+        return <section className='confirm'>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                    className='form-item'
+                    name="Username"
+                    placeholder="Email"
+                    ref={register}/> {errors.username && <p>{errors.username.message}</p>}
+                <input
+                    className='form-item'
+                    name="ConfirmationCode"
+                    placeholder="Confirmation Code"
+                    ref={register}/> {errors.ConfirmationCode && <p>{errors.ConfirmationCode.message}</p>}
+                    <input className='submit' type="submit"/>
+                </form>
+            </section>
+        }
 }
 
 const SignIn = (props) =>{
     const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
     const onSubmitSignIn = (formData) => {
-        console.log(formData,'confirmation code');
+        console.log(formData,'signin');
         console.log(formData.email)
 
     // async function signIn() {
@@ -194,41 +224,50 @@ const SignIn = (props) =>{
 
 const ResendConfirmation = (props) =>{
     const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
-    if(props !== null ){
+    async function resendConfirmationCode(formData) {
+        try {
+            await Auth.resendSignUp(formData);
+            console.log('code resent successfully');
+        } catch (err) {
+            console.log('error resending code: ', err);
+        }
+    }
+
+   if(props !== null ){
         //some function right here but more than likey there's going to be something right here if they sign in. Or just want to go to it directly.
         console.log(props,"resendconfirmation props is not empty");
     }
-async function resendConfirmationCode(formData) {
-    try {
-        await Auth.resendSignUp(formData);
-        console.log('code resent successfully');
-    } catch (err) {
-        console.log('error resending code: ', err);
-    }
-}
-return <section>
-    <form onSubmit={handleSubmit(resendConfirmationCode)}>
-        <input
-            className='form-item'
-            name="email"
-            placeholder="Email"
-            ref={register}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> 
-            {errors.email && <p>{errors.email.message}</p>}
-            <input className='submit' type="submit"/>
-    </form>
-</section>
+
+    return <section>
+        <form onSubmit={handleSubmit(resendConfirmationCode)}>
+            <input
+                className='form-item'
+                name="email"
+                placeholder="Email"
+                ref={register}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/> 
+                {errors.email && <p>{errors.email.message}</p>}
+                <input className='submit' type="submit"/>
+        </form>
+    </section>
 }
 const Login = (props) => {
     const [emailState, setEmailState] = useState({});
     const updateUsername = (username)=>{
         setEmailState({username});
     }
+
+    useEffect(()=>{
+        console.log("email Updated");
+    },[emailState])
+
     return <section className='login'>
+        <div className="container">
         <SignUp updateUsername={updateUsername}/>
         <ConfirmSignUp {...emailState}/>
         <SignIn updateUsername={updateUsername}/>
         <ResendConfirmation {...emailState} />
+        </div>
     </section>
 }
 
