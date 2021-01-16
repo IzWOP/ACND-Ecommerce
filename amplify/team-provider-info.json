@@ -10,6 +10,11 @@
       "StackName": "amplify-acndecommerce-develop-170049",
       "StackId": "arn:aws:cloudformation:us-west-2:406638781171:stack/amplify-acndecommerce-develop-170049/94f15620-4152-11eb-af88-0605c8f6c87b",
       "AmplifyAppId": "d3uq568men1tci"
+    },
+    "categories": {
+      "auth": {
+        "acndecommerce8527be5d": {}
+      }
     }
   }
 }
