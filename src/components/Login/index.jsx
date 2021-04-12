@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 
 //components import
 import SignUp from './SignUp';
-import ConfirmSignUp from './ConfirmSignUp';
+// import ConfirmSignUp from './ConfirmSignUp';
 import ResendConfirmation from './ResendConfirmation';
 import SignIn from './SignIn';
 
@@ -30,7 +30,7 @@ const Login = (props) => {
     return <section className='login'>
         <div className="container">
             <SignUp updateUsername={updateUsername}/>
-            <ConfirmSignUp {...emailState}/>
+            {/* <ConfirmSignUp {...emailState}/> */}
             <SignIn updateUsername={updateUsername}/>
             <ResendConfirmation {...emailState}/>
         </div>

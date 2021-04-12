@@ -3,6 +3,8 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Auth} from 'aws-amplify';
 import * as yup from 'yup';
+import { useHistory } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 //yup schemas
 const signUpSchema = yup
     .object()
@@ -44,29 +46,45 @@ const formFix = (formData) => {
     return cleanData
 }
 
+// const fullSend = ()=>{
+    
+// }
 
 const SignUp = (props) => {
     const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signUpSchema)});
     const [errorCaught,
-        setError] = useState()
+        setError] = useState();
+    const clearBanner = ()=>{
+        let errorUnhide = document.querySelector('.error-banner')
+        errorUnhide.style.display = 'none';
+    }
+    const history = useHistory();
     const onSubmit = (formData) => {
+        // formData.preventDefault()
         const sendData = formFix(formData)
         async function signUp() {
             try {
                 const {user} = await Auth.signUp(sendData);
-                console.log(user, "signupUser")
-                props.updateUsername(sendData.username)
+                // props.updateUsername(sendData.username);
+                return history.push({
+                    pathname: '/login/confirm',
+                    state: { detail: sendData.username }
+                  })
+                
             } catch (error) {
                 console.log(errorCaught);
                 props.updateUsername(null)
                 console.log('error signing up:', error);
-                setError(error)
+                setError(error.message)
+                let errorUnhide = document.querySelector('.error-banner')
+                errorUnhide.style.display = 'block';
             }
 
         }
         signUp()
     };
-    return <section className="form-login">
+    return <section className="sign-up">
+        <div className='error-banner'>{errorCaught}<button onClick={clearBanner} className='close'><FaTimes/></button></div>
         {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit(onSubmit)}>

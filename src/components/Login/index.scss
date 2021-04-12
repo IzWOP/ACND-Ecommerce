@@ -1,6 +1,37 @@
+// .d-none{
+//   display: none;
+// }
+
 .container{
-  max-width: 1200px;
+  // max-width: 1200px;
   margin: auto;
+}
+.sign-up{
+  .error-banner{
+    display: none;
+    position: absolute;
+    left: 0%;
+    top: 0;
+    width: 100vw;
+    min-width: 100%;
+    background-color: rgba(191, 22, 80,.3);
+    opacity: 1;
+    color: #000;
+    text-align: center;
+    button{
+      border: none;
+      background-color: transparent;
+      svg{
+        color: #000;
+        fill: black;
+        stroke: black;
+        path{
+          fill: black;
+        }
+      }
+    }
+  
+  }
 }
 form{
   font-family: "Montserrat",
