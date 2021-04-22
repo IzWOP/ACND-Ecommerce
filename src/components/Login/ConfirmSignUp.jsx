@@ -36,7 +36,7 @@ const ConfirmSignUp = (props) => {
     })
   
 
-//needs to check to see if state contains the username if not then provide one or the other
+    //needs to check to see if state contains the username if not then provide one or the other
     if (props !== null || props !== undefined || props !== '') {
         // action to replace user email to another email. replaces prefilled in with
         // ability for user to update form by replacing username from state in h3 to input
