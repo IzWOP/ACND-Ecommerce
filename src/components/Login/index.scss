@@ -1,12 +1,30 @@
-// .d-none{
-//   display: none;
-// }
+@import '../../stylesheets/mixins.scss';
+
 
 .container{
   // max-width: 1200px;
   margin: auto;
 }
 .sign-up{
+  display: grid;
+  height: 100%;
+  overflow-x: hidden;
+  &_container {
+      display: grid;
+      grid-template-columns:
+      [full-start]minmax(32px, 1fr) [center-start] repeat(8, minmax(min-content, 1fr))
+      [center-end] minmax(32px, 1fr)[full-end];
+      @include breakpoint(lg){            
+          grid-template-columns:
+          [full-start]minmax(32px, 1fr) [center-start] repeat(8, minmax(min-content, 1fr))
+          [center-end] minmax(32px, 1fr)[full-end];
+      }
+      grid-template-rows: [billboard-top]1fr 1fr;
+      @include breakpoint(xl){
+          grid-template-rows: [billboard-top]1fr 1fr;
+
+      }
+    }
   .error-banner{
     display: none;
     position: absolute;

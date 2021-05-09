@@ -22,7 +22,7 @@ const Home = (props) => {
                     <h1>ACND</h1>
                     <h2 data-aos="zoom-in" data-aos-delay="3000" data-aos-duration="2000" data-aos-easing="ease-out-cubic">Coming Soon</h2>
                     <p data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500" data-aos-easing="ease-out-cubic">
-                        A lifestyle and clothing brand to help you ACND.
+                        A lifestyle and clothing brand to help you ascend.
                     </p>
                 </div>
             </div>

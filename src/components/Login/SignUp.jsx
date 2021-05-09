@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Auth} from 'aws-amplify';
 import * as yup from 'yup';
-import { useHistory } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 //yup schemas
 const signUpSchema = yup
@@ -58,19 +57,12 @@ const SignUp = (props) => {
         let errorUnhide = document.querySelector('.error-banner')
         errorUnhide.style.display = 'none';
     }
-    const history = useHistory();
     const onSubmit = (formData) => {
         // formData.preventDefault()
         const sendData = formFix(formData)
         async function signUp() {
             try {
-                const {user} = await Auth.signUp(sendData);
-                // props.updateUsername(sendData.username);
-                return history.push({
-                    pathname: '/login/confirm',
-                    state: { detail: sendData.username }
-                  })
-                
+                 await Auth.signUp(sendData);      
             } catch (error) {
                 console.log(errorCaught);
                 props.updateUsername(null)
