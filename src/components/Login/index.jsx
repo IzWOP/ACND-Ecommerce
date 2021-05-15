@@ -20,11 +20,9 @@ const Login = (props) => {
     }, [emailState])
 
     return <div className='login'>
-        <div className="container">
             <SignUp updateUsername={updateUsername}/>
             {/* <ConfirmSignUp {...emailState}/> */}
             <SignIn updateUsername={updateUsername}/>
-        </div>
     </div>
 }
 

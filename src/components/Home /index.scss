@@ -41,7 +41,7 @@
 		opacity: 0;
         animation: text-expand 3s ease-in-out;
 		animation-fill-mode: forwards;
-        
+        margin-top: 2rem;
         br{
                 @media only screen and (min-width: 600px) {
                 display: none;
