@@ -1,10 +1,37 @@
 import React, {useState} from 'react';
+import Amplify, { Auth } from 'aws-amplify';
+
 
 //stylesheets
 import './index.scss';
 
 
-const Home = (props) => {
+
+
+let email = 'izzyinjurous@aim.com'; 
+function subscribeToList(email) {
+
+  
+    // invoking the actual Lambda function
+    var lambda = new AWS.Lambda();
+    lambda.invoke({
+      FunctionName: 'mailchimpSubscribe', // your function name
+      LogType: "Tail",
+      InvocationType: "Event",
+      Payload: JSON.stringify({
+        "email": email
+      }) // how you send the email to the Lambda event
+    }, function(err, data){
+      if (err) { 
+        console.log(err, err.stack);
+      } else {
+        console.log('Thanks! Your signed up to my email list on Mailchimp');
+      }
+    });
+  }
+subscribeToList(email)
+
+const Home = () => {
     const Istate = {
         user: false,
         setUser: null

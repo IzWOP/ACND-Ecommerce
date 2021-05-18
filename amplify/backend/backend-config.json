@@ -1,35 +1,10 @@
 {
-  "api": {
-    "acndAPI": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7,
-              "description": "first API"
-            }
-          },
-          "additionalAuthenticationProviders": []
-        }
-      }
-    }
-  },
   "auth": {
     "acndecommerce8527be5d": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
-    }
-  },
-  "function": {
-    "mailchimpSubscribe": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   }
 }

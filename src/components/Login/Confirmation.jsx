@@ -1,7 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
-const Confirmation = (props) => {
+const Confirmation = () => {
 
     return <section className="confirmation">
         <h2>Con-Fuckin-Firmed</h2>
