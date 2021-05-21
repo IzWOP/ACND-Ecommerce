@@ -1,17 +1,17 @@
 {
-  "providers": [
-    "awscloudformation"
-  ],
-  "projectName": "ACND-Ecom",
-  "version": "3.0",
+  "projectName": "ACNDEcommerce",
+  "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {
       "SourceDir": "src",
       "DistributionDir": "build",
-      "BuildCommand": "yarn run build",
+      "BuildCommand": "yarn run-script build",
       "StartCommand": "yarn start"
     }
-  }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
 }

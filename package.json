@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.21",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@hookform/resolvers": "^1.1.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -40,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.41",
     "aos": "^3.0.0-beta.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"

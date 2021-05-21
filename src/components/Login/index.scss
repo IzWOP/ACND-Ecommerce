@@ -1,12 +1,71 @@
-// .d-none{
-//   display: none;
-// }
+@import '../../stylesheets/mixins.scss';
 
-.container{
-  // max-width: 1200px;
-  margin: auto;
-}
 .sign-up{
+  display: grid;
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: linear-gradient(to right, rgba(0,0,0,.5), rgba(0,0,0,.5)), url('https://res.cloudinary.com/izzyhv/image/upload/f_auto,q_auto/v1/ecommerce/ACND/cloudy-mountains_dfnohd.jpg');
+  background-size: cover;
+  grid-template-columns:
+    [full-start]minmax(32px, 1fr) [center-start] repeat(8, minmax(min-content, 1fr))
+    [center-end] minmax(32px, 1fr)[full-end];
+    @include breakpoint(lg){            
+        grid-template-columns:
+        [full-start]minmax(32px, 1fr) [center-start] repeat(8, minmax(min-content, 1fr))
+        [center-end] minmax(32px, 1fr)[full-end];
+    }
+    grid-template-rows: [billboard-top]1fr 1fr 1fr 1fr 1fr;
+    @include breakpoint(xl){
+        grid-template-rows: [billboard-top]1fr 1fr;
+
+    }
+   .container {
+     display: grid;
+      grid-column: center-start / center-end;
+      grid-row: 2/5;
+      grid-template-columns:repeat(8, minmax(min-content, 1fr));
+      
+      .register-box{
+        background-color: #fff;
+        border-radius: 8px;
+        display: grid;
+        grid-column: 3/7;
+        grid-row: 1/-1;
+        justify-self: center;
+        align-self: center;
+        height: 100%;
+        width: 100%;
+        max-width: 550px;
+        h2{
+          text-align: center;
+          margin: 0;
+          font-weight: bold;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: 0.25px;
+          color: rgba(0, 0, 0, 0.87);
+          margin-top: 4rem;
+          margin-bottom: 2rem;
+          @include breakpoint(lg){
+          }
+        }
+        form{
+          align-items: center;
+        }
+        .link{
+          text-decoration: none;
+          text-align: center;
+          margin-bottom: 1rem;
+          font-size: .8rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+
   .error-banner{
     display: none;
     position: absolute;
@@ -32,6 +91,55 @@
     }
   
   }
+  .social-icons{
+    margin: auto;
+    .icon{
+      position: relative;
+      height: 3rem;
+      width: 3rem;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 1rem;
+      margin-top: 0;
+      background-color: #000;
+      text-decoration: none;
+      color: #fff;
+      &:hover{
+        transform: translateY(-4px);
+      }
+      svg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(100%,100%);
+        text-decoration: none;
+      }
+      &.twitter{
+        background-color: #1DA1F2;
+      }
+      &.facebook{
+        background-color: #3c5a99;
+        
+        svg{
+          transform: translate(185%,100%);
+        }
+      }
+      &.google{
+        background-color: #DB4437;
+      }
+      
+
+    }
+  }
+  .submit{
+    border: none;
+    padding: 1rem;
+    font-weight: 700;
+    box-shadow: 0px 19px 30px 0px rgba(0,0,0,0.32);
+    border-radius: 20px;
+    width: 200px;
+  }
 }
 form{
   font-family: "Montserrat",
@@ -40,16 +148,14 @@ form{
   sans-serif;
   display:  flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  max-width: 600px;
-  height: 500px;
+  margin-bottom: 3rem;
+  margin-right: 3rem;
+  margin-left: 3rem;
   .form-item{
-    padding: 10px 18px 10px 18px;
+    padding: 8px 16px 8px 16px;
     max-width: 400px;
     width: 100%;
-    font-size: 1rem;
+    font-size: .9rem;
     background-color: transparent;
     border: 1px solid #E3E3E3;
     border-radius: 30px;

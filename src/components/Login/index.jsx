@@ -3,18 +3,10 @@ import React, {useState, useEffect} from 'react';
 
 //components import
 import SignUp from './SignUp';
-// import ConfirmSignUp from './ConfirmSignUp';
-import ResendConfirmation from './ResendConfirmation';
 import SignIn from './SignIn';
 
 //style
 import './index.scss';
-
-
-
-
-
-
 
 const Login = (props) => {
     const [emailState,
@@ -27,14 +19,11 @@ const Login = (props) => {
         console.log("email Updated");
     }, [emailState])
 
-    return <section className='login'>
-        <div className="container">
+    return <div className='login'>
             <SignUp updateUsername={updateUsername}/>
             {/* <ConfirmSignUp {...emailState}/> */}
             <SignIn updateUsername={updateUsername}/>
-            <ResendConfirmation {...emailState}/>
-        </div>
-    </section>
+    </div>
 }
 
 export default Login;
