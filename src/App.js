@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AOS from 'aos';
-// import { withAuthenticator } from '@aws-amplify/ui-react';
 
 //global styling
 import 'aos/src/sass/aos.scss';

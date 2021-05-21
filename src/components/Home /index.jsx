@@ -4,30 +4,32 @@ import Amplify, { Auth } from 'aws-amplify';
 
 //stylesheets
 import './index.scss';
+// 
 
-
-
+fetch('https://uxh7cpzimd.execute-api.us-west-2.amazonaws.com/subscribe',{
+    method: 'GET',
+    headers: new Headers({'Content-Type': 'text/xml','Content-Type': 'application/json;charset=utf-8',})
+})
+.then(response=>response.json()).then(data=>console.log(data));
 
 let email = 'izzyinjurous@aim.com'; 
 function subscribeToList(email) {
 
   
     // invoking the actual Lambda function
-    var lambda = new AWS.Lambda();
-    lambda.invoke({
-      FunctionName: 'mailchimpSubscribe', // your function name
-      LogType: "Tail",
-      InvocationType: "Event",
-      Payload: JSON.stringify({
-        "email": email
-      }) // how you send the email to the Lambda event
-    }, function(err, data){
-      if (err) { 
-        console.log(err, err.stack);
-      } else {
-        console.log('Thanks! Your signed up to my email list on Mailchimp');
-      }
-    });
+    // var lambda = new AWS.Lambda();
+    // lambda.invoke({
+    //   FunctionName: 'mailchimpSubscribe', // your function name
+    //   Payload: JSON.stringify({
+    //     "email": email
+    //   }) // how you send the email to the Lambda event
+    // }, function(err, data){
+    //   if (err) { 
+    //     console.log(err, err.stack);
+    //   } else {
+    //     console.log('Thanks! Your signed up to my email list on Mailchimp');
+    //   }
+    // });
   }
 subscribeToList(email)
 
