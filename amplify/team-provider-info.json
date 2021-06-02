@@ -14,7 +14,7 @@
     "categories": {
       "function": {
         "acndecommerce66ec2718CustomMessage": {
-          "REDIRECTURL": "acnd.us",
+          "REDIRECTURL": "https://www.acnd.us/",
           "EMAILSUBJECT": "ACND Confirmed",
           "EMAILMESSAGE": "Confirm your email for your account",
           "deploymentBucketName": "amplify-acndecommerce-dev-165447-deployment",
@@ -24,6 +24,10 @@
           "GROUP": "acndcustomers",
           "deploymentBucketName": "amplify-acndecommerce-dev-165447-deployment",
           "s3Key": "amplify-builds/acndecommerce66ec2718PostConfirmation-514b4b45704558393830-build.zip"
+        },
+        "subscribeMailchimp": {
+          "deploymentBucketName": "amplify-acndecommerce-dev-165447-deployment",
+          "s3Key": "amplify-builds/subscribeMailchimp-484c5836346f79623559-build.zip"
         }
       },
       "auth": {

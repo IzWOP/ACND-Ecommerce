@@ -9,6 +9,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "subscribeMailchimp": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "auth": {
@@ -49,6 +54,22 @@
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
+          ]
+        }
+      ]
+    }
+  },
+  "api": {
+    "subscribeAPI": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "subscribeMailchimp",
+          "attributes": [
+            "Name",
+            "Arn"
           ]
         }
       ]

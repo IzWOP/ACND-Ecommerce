@@ -1,0 +1,44 @@
+{
+    "paths": [
+        {
+            "name": "/subscribe",
+            "lambdaFunction": "subscribeMailchimp",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET"
+                ]
+            },
+            "policyResourceName": "/subscribe"
+        }
+    ],
+    "resourceName": "subscribeAPI",
+    "apiName": "subscribeAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "subscribeMailchimp"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-acndecommerce-dev-165447-authRole",
+        "unAuthRoleName": "amplify-acndecommerce-dev-165447-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "subscribeMailchimp",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "5e10e5a9"
+}

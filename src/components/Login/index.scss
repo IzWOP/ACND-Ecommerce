@@ -140,39 +140,39 @@
     border-radius: 20px;
     width: 200px;
   }
-}
-form{
-  font-family: "Montserrat",
-  "Helvetica Neue",
-  Arial,
-  sans-serif;
-  display:  flex;
-  flex-direction: column;
-  margin-bottom: 3rem;
-  margin-right: 3rem;
-  margin-left: 3rem;
-  .form-item{
-    padding: 8px 16px 8px 16px;
-    max-width: 400px;
-    width: 100%;
-    font-size: .9rem;
-    background-color: transparent;
-    border: 1px solid #E3E3E3;
-    border-radius: 30px;
-    color: #2c2c2c;
-    margin-bottom:1.5rem;
-    text-indent: 1rem;
-    
-  }
-  p {
-    color: #bf1650;
-  }
-
-  p::before {
-    display: inline;
-    content: "⚠ ";
-  }
-  .submit{
-    max-width: 400px;
+  form{
+    font-family: "Montserrat",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+    display:  flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+    .form-item{
+      padding: 8px 16px 8px 16px;
+      max-width: 400px;
+      width: 100%;
+      font-size: .9rem;
+      background-color: transparent;
+      border: 1px solid #E3E3E3;
+      border-radius: 30px;
+      color: #2c2c2c;
+      margin-bottom:1.5rem;
+      text-indent: 1rem;
+      
+    }
+    p {
+      color: #bf1650;
+    }
+  
+    p::before {
+      display: inline;
+      content: "⚠ ";
+    }
+    .submit{
+      max-width: 400px;
+    }
   }
 }
