@@ -60,7 +60,7 @@ app.post('/subscribe', function(req, res) {
   async function subscribe(email) {
     const body = {
          email_address : email,
-         status : 'pending'
+         status : 'subscribe'
        }
      const response = await mailchimp
      .lists
@@ -68,7 +68,7 @@ app.post('/subscribe', function(req, res) {
      .then(function(results) {
          console.log('success');
          let success = 'success'
-         return success;
+         return results;
      })
      .catch(function (err) {
          console.log('error');

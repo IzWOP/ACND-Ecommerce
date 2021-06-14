@@ -27,11 +27,12 @@
         },
         "subscribeMailchimp": {
           "deploymentBucketName": "amplify-acndecommerce-dev-165447-deployment",
-          "s3Key": "amplify-builds/subscribeMailchimp-484c5836346f79623559-build.zip"
+          "s3Key": "amplify-builds/subscribeMailchimp-356d39736b5842465135-build.zip"
         }
       },
       "auth": {
-        "acndecommerce66ec2718": {}
+        "acndecommerce66ec2718": {},
+        "userPoolGroups": {}
       }
     }
   }
