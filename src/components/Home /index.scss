@@ -125,6 +125,7 @@ $green: #1ECD97;
         .submit {
             max-width: 400px;
             border-radius: 20px;
+            margin-bottom: 1rem;
         }
         .active{
             display: block;
@@ -132,6 +133,7 @@ $green: #1ECD97;
         .d-none{
             display: none;
         }
+  
     }
     .submit {
         outline: none;
@@ -190,9 +192,28 @@ $green: #1ECD97;
             content: fa-content($fa-var-check);
         }
     }
+    .error{
+        font-size: 13px;
+        color: white;
+        background: red;
+        @extend %fa-icon;
+        @extend .fas;
+        &:after {
+            @extend %fa-icon;
+            @extend .fas;
+            font-family: "Font Awesome 5 Free";
+            content: fa-content($fa-var-times);
+        }
+    }
     .hide{
         opacity: 0 !important; 
         transition: opacity 0.3s linear;  
+    }
+    .email-status{
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 @keyframes rotating {

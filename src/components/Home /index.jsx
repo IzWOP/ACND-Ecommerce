@@ -8,7 +8,6 @@ import '../../utils/api-config';
 //stylesheets
 import './index.scss';
 
-
 const emailSchema = yup
     .object()
     .shape({
@@ -18,123 +17,130 @@ const emailSchema = yup
             .required('Email is required')
     });
 
-// function sendData(email) {
-//     const apiName = 'subscribeAPI';
-//     const path = '/subscribe';
-//     const myInit = {
-//         body: {
-//             email_address: email
-//         }, // replace this with attributes you need
-//         headers: {}, // OPTIONAL
-//     }; //replace this with the path you have configured on your API
-
-//     return API
-//         .post(apiName, path, myInit)
-//         .then(response => {
-//             console.log(response);
-//         });
-// }
+// function sendData(email) {     const apiName = 'subscribeAPI';     const path
+// = '/subscribe';     const myInit = {         body: { email_address: email
+//     }, // replace this with attributes you need    headers: {}, // OPTIONAL
+//   }; //replace this with the path you have configured on your API     return
+// API         .post(apiName, path, myInit)      .then(response => {
+// console.log(response);         }); }
 
 const Home = () => {
 
     //setting up email state/result for button ui and error results
-    const [subscribeStatus, setStatus] = useState({email_status:null})
-    const [subscribeResult, setResult] = useState({email_result:null})
-    const { register, handleSubmit, formState:{ errors } } = useForm({
-        resolver: yupResolver(emailSchema)
-      }); useForm({resolver: yupResolver(emailSchema)});
+    const [subscribeStatus,
+        setStatus] = useState({email_status: null})
+    const [subscribeResult,
+        setResult] = useState({email_result: null})
+    const {register, handleSubmit, formState: {
+            errors
+        }} = useForm({resolver: yupResolver(emailSchema)});
+    useForm({resolver: yupResolver(emailSchema)});
 
+    //grabbing button and form for UI animations
+    let button = document.querySelector('.submit');
+    let formSection = document.querySelector('form');
 
-        function sendData(email) {
+    function errorReport() {
+        button
+            .classList
+            .remove("clicked");
+        button
+            .classList
+            .add("error");
+        callback()
+    }
+    function validate() {
+        button
+            .classList
+            .remove("clicked");
+        button
+            .classList
+            .add("validate");
+        callback()
+    }
+    //if succeeded continue
+    function callback() {
+        setTimeout(function () {
+            if (button.classList.contains('validate')) {
+                button
+                    .classList
+                    .remove("validate");
+                formSection
+                    .classList
+                    .add('hide')
+                setTimeout(function () {
+                    formSection.style.display = 'none'
+                }, 5000);
+            } else if (button.classList.contains('error')) {
+                button
+                    .classList
+                    .remove("error");
+            }
+        }, 3050);
+    }
+
+    //send to internal API to hit mailchimp
+    function sendData(email) {
+        //loading on button
+        button
+            .classList
+            .add('clicked')
+
+        //setting up API sending
         const apiName = 'subscribeAPI';
         const path = '/subscribe';
         const myInit = {
-            //setting up API sending
             body: {
-                email_address: email,
-            }, 
+                email_address: email
+            },
             headers: {}, // OPTIONAL
-        }; 
-        //grabbing button and form for UI animations
-        let button = document.querySelector('.submit');
-        let formSection = document.querySelector('form');
-        button.classList.add('clicked')
-        
-        function validate() {
-            setTimeout(function () {
-                button.classList.remove("clicked");
-                button.classList.add("validate");
-                callback()
-            }, 2250);
-        }
-        //if succeeded continue
-        function callback(){
-            setTimeout(function () {
-                    button.classList.remove("validate");
-                    formSection.classList.add('hide')
-                    setTimeout(function () {
-                        formSection.style.display= 'none'
-                }, 5000);
-            }, 1050);
-        }
+        };
         return API
             .post(apiName, path, myInit)
             .then(res => {
-                validate()
                 // console.log(res);
-                if(res.errResult){
-                    console.log(JSON.parse(res.errResult))
+                if (res.errResult) {
+                    errorReport()
                     let errResponse = JSON.parse(res.errResult)
-                    setResult({email_result: errResponse.title })
-                } else if(res.result.status === 'pending') {
-                    setResult({email_result: res.result.status })
-                } else{
+                    setResult({email_result: errResponse.title})
+                } else if (res.result.status === 'pending') {
+                    validate()
+                    setResult({email_result: res.result.status})
+                } else {
                     return;
                 }
-                
-                });
+
+            });
     }
 
-
     const onSubmitEmail = (formData) => {
-        // formData.preventDefault()
-        
-        //cleaning setting up data
+        // formData.preventDefault() cleaning setting up data
         const email = formData.email;
         //send said parameter into function clean
         sendData(email)
-        // let result = sendData(email)
-        //promise return from onsubmit
-        // result.then((res)=>{
-        //     console.log(res);
-        // }).catch((err)=>{
-        //     //just in case it failes
-        //     console.log('promise in api failed',err);
-        // })
-
     }
-    
-    useEffect(()=>{
+    //setting the status to notify the user if email subscription succeeded
+    useEffect(() => {
         switch (subscribeResult.email_result) {
             case 'Member Exists':
                 console.log('the exists fired switch');
-                setStatus({email_status:"Sorry Bro, that email already exists."})
+                setStatus({email_status: "Sorry Bro, that email already exists."});
+                setTimeout(function () {
+                    setStatus({email_status: null})
+                }, 3050);
                 break;
             case 'Forgotten Email Not Subscribed':
-                console.log('the forgotten fired switch');
-                setStatus({email_status:"Sorry My Dude, that email is already in the system."});
+                setStatus({email_status: "Sorry My Dude, that email is already in the system."});
                 window.open('http://eepurl.com/hyzFTv', '_blank');
                 break;
             case 'pending':
-                console.log('subscribed the mother fucker switch');
-                setStatus({email_status:"Hell yes, you're in! Check your email to confirm."})
+                setStatus({email_status: "Hell yes, you're in! Check your email to confirm."});
                 break;
             default:
-                setStatus({email_status:null});
+                setStatus({email_status: null});
                 break;
         }
-    },[subscribeResult]);
-
+    }, [subscribeResult]);
 
     return <div className='billboard'>
         <div className='background'></div>
@@ -154,16 +160,23 @@ const Home = () => {
                         data-aos-easing="ease-out-cubic">
                         A lifestyle and clothing brand to help you ascend.
                     </p>
-                    <form onSubmit={handleSubmit(onSubmitEmail)} data-aos-delay="3000"  data-aos="zoom-in" data-aos-duration="1500" data-aos-easing="ease-out-cubic">
+                    <form
+                        onSubmit={handleSubmit(onSubmitEmail)}
+                        data-aos-delay="3000"
+                        data-aos="zoom-in"
+                        data-aos-duration="1500"
+                        data-aos-easing="ease-out-cubic">
                         <input
                             className='form-item'
                             name="email"
                             placeholder="Email"
-                            {...register("email",{pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"})} /> 
+                            {...register("email",{pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"})}/> 
                             {errors.email && <p>{errors.email.message}</p>}
-                            {subscribeStatus.email_status!== null &&<span>{subscribeStatus.email_status}</span> }
                         <button className='submit' type="submit" value="Submitt"></button>
                     </form>
+                    {subscribeStatus.email_status !== null && <div className='email-status'>
+                        {subscribeStatus.email_status}
+                    </div>}
                 </div>
             </div>
         </div>
