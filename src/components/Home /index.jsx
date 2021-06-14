@@ -97,30 +97,30 @@ const Home = () => {
         //loading on button
         button.classList.add('clicked');
         return API
-            .get(apiName,path)
-            // .post(apiName, path, myInit)
+            .post(apiName, path, myInit)
             .then(res => {
                 console.log(res);
-                // if (res.errResult) {
-                //     console.log(res.errResult);
-                //     errorReport()
-                //     let errResponse = JSON.parse(res.errResult)
-                //     setResult({email_result: errResponse.title})
-                // } else if (res.result.status === 'pending') {
-                //     validate()
-                //     console.log(res.result);
-                //     setResult({email_result: res.result.status})
-                // } else {
-                //     setResult({email_result: null});
-                //     callback();
-                //     console.log(res,'final catch');
-                //     return;
-                // }
-            }).catch((err)=>{
-                console.log(err);
-                // setResult({email_result: 'error'})
-                // callback()
-            });
+                if (res.errResult) {
+                    console.log(res.errResult);
+                    errorReport()
+                    let errResponse = JSON.parse(res.errResult)
+                    setResult({email_result: errResponse.title})
+                } else if (res.result.status === 'pending') {
+                    validate()
+                    console.log(res.result);
+                    setResult({email_result: res.result.status})
+                } else {
+                    setResult({email_result: null});
+                    callback();
+                    console.log(res,'final catch');
+                    return;
+                }
+            })
+            // .catch((err)=>{
+            //     console.log(err);
+            //     // setResult({email_result: 'error'})
+            //     // callback()
+            // });
     }
 
     const onSubmitEmail = (formData) => {
