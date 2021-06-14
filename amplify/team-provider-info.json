@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-acndecommerce-dev-140726-authRole",
+      "UnauthRoleArn": "arn:aws:iam::406638781171:role/amplify-acndecommerce-dev-140726-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::406638781171:role/amplify-acndecommerce-dev-140726-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-acndecommerce-dev-140726-deployment",
+      "UnauthRoleName": "amplify-acndecommerce-dev-140726-unauthRole",
+      "StackName": "amplify-acndecommerce-dev-140726",
+      "StackId": "arn:aws:cloudformation:us-west-2:406638781171:stack/amplify-acndecommerce-dev-140726/26b00310-cd4c-11eb-ba69-02612b177051",
+      "AmplifyAppId": "d3p1w032c62eix"
+    },
+    "categories": {
+      "auth": {
+        "cognito9647c212": {}
+      },
+      "function": {
+        "newsletterSub": {
+          "deploymentBucketName": "amplify-acndecommerce-dev-140726-deployment",
+          "s3Key": "amplify-builds/newsletterSub-4a326e426b466c557364-build.zip"
+        }
+      }
+    }
+  }
+}

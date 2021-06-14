@@ -17,13 +17,6 @@ const emailSchema = yup
             .required('Email is required')
     });
 
-// function sendData(email) {     const apiName = 'subscribeAPI';     const path
-// = '/subscribe';     const myInit = {         body: { email_address: email
-//     }, // replace this with attributes you need    headers: {}, // OPTIONAL
-//   }; //replace this with the path you have configured on your API     return
-// API         .post(apiName, path, myInit)      .then(response => {
-// console.log(response);         }); }
-
 const Home = () => {
 
     //setting up email state/result for button ui and error results
@@ -92,35 +85,34 @@ const Home = () => {
             body: {
                 email_address: email
             },
-            headers: {}, // OPTIONAL
         };
         //loading on button
         button.classList.add('clicked');
         return API
             .post(apiName, path, myInit)
             .then(res => {
-                console.log(res);
                 if (res.errResult) {
-                    console.log(res.errResult);
+                    //catch error first and set err UI
                     errorReport()
-                    let errResponse = JSON.parse(res.errResult)
+                    let errResponse = JSON.parse(res.errResult.text)
                     setResult({email_result: errResponse.title})
                 } else if (res.result.status === 'pending') {
+                    //if successful we validate
                     validate()
-                    console.log(res.result);
                     setResult({email_result: res.result.status})
                 } else {
+                    //just in case we clear and start over
                     setResult({email_result: null});
                     callback();
-                    console.log(res,'final catch');
                     return;
                 }
             })
-            // .catch((err)=>{
-            //     console.log(err);
-            //     // setResult({email_result: 'error'})
-            //     // callback()
-            // });
+            .catch((err)=>{
+                //only for huge main website error catching/api
+                console.log(err);
+                setResult({email_result: 'error'})
+                callback()
+            });
     }
 
     const onSubmitEmail = (formData) => {
@@ -146,6 +138,7 @@ const Home = () => {
                 setStatus({email_status: "Hell yes, you're in! Check your email to confirm."});
                 break;
             case 'error':
+                //huge website error default fallback
                 setStatus({email_status: "Oh no, somethings broken. Subscribe in opened page"});
                 window.open('http://eepurl.com/hyzFTv', '_blank');
                 setTimeout(function () {
@@ -153,6 +146,7 @@ const Home = () => {
                 }, 3050);
                 break;
             default:
+                //setting the state just another fallback
                 setStatus({email_status: null});
                 break;
         }
@@ -178,9 +172,9 @@ const Home = () => {
                     </p>
                     <form
                         onSubmit={handleSubmit(onSubmitEmail)}
-                        data-aos-delay="3000"
+                        data-aos-delay="000"
                         data-aos="zoom-in"
-                        data-aos-duration="1500"
+                        data-aos-duration="00"
                         data-aos-easing="ease-out-cubic">
                         <input
                             className='form-item'
