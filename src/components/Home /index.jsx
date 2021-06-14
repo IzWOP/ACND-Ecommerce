@@ -58,7 +58,7 @@ const Home = () => {
             .add("validate");
         callback()
     }
-    //if succeeded continue
+    //return to previous state
     function callback() {
         setTimeout(function () {
             if (button.classList.contains('validate')) {
@@ -75,19 +75,18 @@ const Home = () => {
                 button
                     .classList
                     .remove("error");
+            } else{
+                button
+                    .classList
+                    .remove("clicked");
             }
         }, 3050);
     }
 
     //send to internal API to hit mailchimp
     function sendData(email) {
-        //loading on button
-        button
-            .classList
-            .add('clicked')
-
         //setting up API sending
-        const apiName = 'subscribeAPI';
+        const apiName = 'newsletterAPI';
         const path = '/subscribe';
         const myInit = {
             body: {
@@ -95,26 +94,37 @@ const Home = () => {
             },
             headers: {}, // OPTIONAL
         };
+        //loading on button
+        button.classList.add('clicked');
         return API
-            .post(apiName, path, myInit)
+            .get(apiName,path)
+            // .post(apiName, path, myInit)
             .then(res => {
-                // console.log(res);
-                if (res.errResult) {
-                    errorReport()
-                    let errResponse = JSON.parse(res.errResult)
-                    setResult({email_result: errResponse.title})
-                } else if (res.result.status === 'pending') {
-                    validate()
-                    setResult({email_result: res.result.status})
-                } else {
-                    return;
-                }
-
+                console.log(res);
+                // if (res.errResult) {
+                //     console.log(res.errResult);
+                //     errorReport()
+                //     let errResponse = JSON.parse(res.errResult)
+                //     setResult({email_result: errResponse.title})
+                // } else if (res.result.status === 'pending') {
+                //     validate()
+                //     console.log(res.result);
+                //     setResult({email_result: res.result.status})
+                // } else {
+                //     setResult({email_result: null});
+                //     callback();
+                //     console.log(res,'final catch');
+                //     return;
+                // }
+            }).catch((err)=>{
+                console.log(err);
+                // setResult({email_result: 'error'})
+                // callback()
             });
     }
 
     const onSubmitEmail = (formData) => {
-        // formData.preventDefault() cleaning setting up data
+        //  cleaning setting up data
         const email = formData.email;
         //send said parameter into function clean
         sendData(email)
@@ -123,7 +133,6 @@ const Home = () => {
     useEffect(() => {
         switch (subscribeResult.email_result) {
             case 'Member Exists':
-                console.log('the exists fired switch');
                 setStatus({email_status: "Sorry Bro, that email already exists."});
                 setTimeout(function () {
                     setStatus({email_status: null})
@@ -135,6 +144,13 @@ const Home = () => {
                 break;
             case 'pending':
                 setStatus({email_status: "Hell yes, you're in! Check your email to confirm."});
+                break;
+            case 'error':
+                setStatus({email_status: "Oh no, somethings broken. Subscribe in opened page"});
+                window.open('http://eepurl.com/hyzFTv', '_blank');
+                setTimeout(function () {
+                    setStatus({email_status: null})
+                }, 3050);
                 break;
             default:
                 setStatus({email_status: null});

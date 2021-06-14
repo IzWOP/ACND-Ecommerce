@@ -10,10 +10,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "subscribeMailchimp": {
+    "newsletterSub": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      "service": "Lambda",
+      "dependsOn": []
     }
   },
   "auth": {
@@ -60,13 +61,13 @@
     }
   },
   "api": {
-    "subscribeAPI": {
+    "newsletterAPI": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "subscribeMailchimp",
+          "resourceName": "newsletterSub",
           "attributes": [
             "Name",
             "Arn"

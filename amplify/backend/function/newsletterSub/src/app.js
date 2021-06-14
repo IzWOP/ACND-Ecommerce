@@ -56,28 +56,27 @@ app.get('/subscribe/*', function(req, res) {
 
 app.post('/subscribe', function(req, res) {
   // Add your code here
-  let incomingEmail = req.body.email_address
-  async function subscribe(email) {
-    const body = {
-         email_address : email,
-         status : 'subscribe'
-       }
-     const response = await mailchimp
-     .lists
-     .addListMember(list_id, body)
-     .then(function(results) {
-         console.log('success');
-         let success = 'success'
-         return results;
-     })
-     .catch(function (err) {
-         console.log('error');
-        return err.response.body.title;
-     });
-     return response;
- }
-  let mailchimpRes = subscribe(incomingEmail)
-  res.json({success: mailchimpRes})
+//   let incomingEmail = req.body.email_address
+//   async function subscribe(email) {
+//     const body = {
+//          email_address : email,
+//          status : 'subscribe'
+//        }
+//      const response = await mailchimp
+//      .lists
+//      .addListMember(list_id, body)
+//      .then(function(results) {
+//          return res.json(results)
+//      })
+//      .catch(function (err) {
+//         return res.json(err)
+//         // return res.json(err.response.body.title);
+//      });
+//      return res.json(response);
+//  }
+//  subscribe(incomingEmail)
+res.json({success: 'get call succeed!', url: req.url});
+
 });
 
 

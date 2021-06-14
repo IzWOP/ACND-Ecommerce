@@ -14,15 +14,15 @@
         },
     
     
-          "functionsubscribeMailchimpName": {
+          "functionnewsletterSubName": {
             "Type": "String",
-            "Default": "functionsubscribeMailchimpName"
+            "Default": "functionnewsletterSubName"
           },
         
           
-          "functionsubscribeMailchimpArn": {
+          "functionnewsletterSubArn": {
             "Type": "String",
-            "Default": "functionsubscribeMailchimpArn"
+            "Default": "functionnewsletterSubArn"
           }
         
           
@@ -41,13 +41,13 @@
     },
     "Resources": {
         
-        "PolicyAPIGWsubscribeAPIauth": {
+        "PolicyAPIGWnewsletterAPIauth": {
             "DependsOn": [
-              "subscribeAPI"
+              "newsletterAPI"
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-              "PolicyName": "PolicyAPIGWsubscribeAPIauth",
+              "PolicyName": "PolicyAPIGWnewsletterAPIauth",
               "Roles": [
                 {"Ref": "authRoleName"}
               ],
@@ -77,7 +77,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -108,7 +108,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -143,7 +143,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -174,7 +174,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -207,13 +207,13 @@
         
         
         
-        "PolicyAPIGWsubscribeAPIunauth": {
+        "PolicyAPIGWnewsletterAPIunauth": {
             "DependsOn": [
-              "subscribeAPI"
+              "newsletterAPI"
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-              "PolicyName": "PolicyAPIGWsubscribeAPIunauth",
+              "PolicyName": "PolicyAPIGWnewsletterAPIunauth",
               "Roles": [
                  {"Ref": "unauthRoleName"}
               ],
@@ -243,7 +243,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -274,7 +274,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -309,7 +309,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -340,7 +340,7 @@
                             },
                             ":",
                             {
-                              "Ref": "subscribeAPI"
+                              "Ref": "newsletterAPI"
                             },
                             "/",
                             {
@@ -369,16 +369,16 @@
             }
           },
         
-      "subscribeAPI": {
+      "newsletterAPI": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "subscribeAPI",
+          "Name": "newsletterAPI",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "subscribeAPI"
+              "title": "newsletterAPI"
             },
             "host": {
                 "Fn::Join": [
@@ -506,7 +506,7 @@
                             
                             {
                                 
-                                "Ref": "functionsubscribeMailchimpArn"
+                                "Ref": "functionnewsletterSubArn"
                             },
                             
                             "/invocations"
@@ -611,7 +611,7 @@
                           
                           {
                             
-                            "Ref": "functionsubscribeMailchimpArn"
+                            "Ref": "functionnewsletterSubArn"
                           },
                           
                           "/invocations"
@@ -668,12 +668,12 @@
                   
         
         
-        "functionsubscribeMailchimpPermissionsubscribeAPI": {
+        "functionnewsletterSubPermissionnewsletterAPI": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionsubscribeMailchimpName"
+                        "Ref":  "functionnewsletterSubName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -692,7 +692,7 @@
                             },
                             ":",
                             {
-                                "Ref": "subscribeAPI"
+                                "Ref": "newsletterAPI"
                             },
                             "/*/*/*"
                         ]
@@ -703,7 +703,7 @@
         
         
         
-      "DeploymentAPIGWsubscribeAPI5e10e5a9": {
+      "DeploymentAPIGWnewsletterAPI": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -717,7 +717,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "subscribeAPI"
+            "Ref": "newsletterAPI"
           }
         }
       }
@@ -725,15 +725,15 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "subscribeAPI"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "newsletterAPI"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "subscribeAPI"
+          "Value": "newsletterAPI"
         },
         "ApiId": {
           "Description": "API ID (prefix of API URL)",
-          "Value": {"Ref": "subscribeAPI"}
+          "Value": {"Ref": "newsletterAPI"}
         }
     }
   }

@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "subscribeMailchimp",
+            "newsletterSub",
             {
               "Fn::Join": [
                 "",
                 [
-                  "subscribeMailchimp",
+                  "newsletterSub",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "acndecommerceLambdaRole2589fe7e",
+            "acndecommerceLambdaRolef498b37a",
             {
               "Fn::Join": [
                 "",
                 [
-                  "acndecommerceLambdaRole2589fe7e",
+                  "acndecommerceLambdaRolef498b37a",
                   "-",
                   {
                     "Ref": "env"

@@ -2,7 +2,7 @@
     "paths": [
         {
             "name": "/subscribe",
-            "lambdaFunction": "subscribeMailchimp",
+            "lambdaFunction": "newsletterSub",
             "privacy": {
                 "protected": true,
                 "auth": [
@@ -17,11 +17,11 @@
             "policyResourceName": "/subscribe"
         }
     ],
-    "resourceName": "subscribeAPI",
-    "apiName": "subscribeAPI",
+    "resourceName": "newsletterAPI",
+    "apiName": "newsletterAPI",
     "functionArns": [
         {
-            "lambdaFunction": "subscribeMailchimp"
+            "lambdaFunction": "newsletterSub"
         }
     ],
     "privacy": {
@@ -33,12 +33,11 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "subscribeMailchimp",
+            "resourceName": "newsletterSub",
             "attributes": [
                 "Name",
                 "Arn"
             ]
         }
-    ],
-    "uuid": "5e10e5a9"
+    ]
 }
