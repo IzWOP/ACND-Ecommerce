@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {API} from 'aws-amplify';
 import {useForm} from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import '../../utils/api-config';
+// import '../../utils/api-config';
 
 //stylesheets
 import './index.scss';
