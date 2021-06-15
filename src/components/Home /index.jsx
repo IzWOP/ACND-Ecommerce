@@ -172,9 +172,9 @@ const Home = () => {
                     </p>
                     <form
                         onSubmit={handleSubmit(onSubmitEmail)}
-                        data-aos-delay="000"
+                        data-aos-delay="3000"
                         data-aos="zoom-in"
-                        data-aos-duration="00"
+                        data-aos-duration="2000"
                         data-aos-easing="ease-out-cubic">
                         <input
                             className='form-item'
