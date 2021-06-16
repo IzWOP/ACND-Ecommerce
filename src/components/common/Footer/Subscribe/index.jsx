@@ -155,10 +155,11 @@ const Subscribe=()=> {
         }, [subscribeResult]);
 
     return (
-        <div>
-            <h1>
+        <section className='subscribe'>
+            <div className='background'></div>
+            <h5>
             subscribe is working
-            </h1>
+            </h5>
             <form
                         onSubmit={handleSubmit(onSubmitEmail)}
                         data-aos-delay="3000"
@@ -176,7 +177,7 @@ const Subscribe=()=> {
                     {subscribeStatus.email_status !== null && <div className='email-status'>
                         {subscribeStatus.email_status}
                     </div>}
-        </div>
+        </section>
     )
 }
 
