@@ -1,5 +1,6 @@
 .billboard {
 
+
     // background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1603663005/ecommerce/ACND/cloudy-mountains_dfnohd.jpg');
     background-image: url('https://picsum.photos/1600/2000');
     width: 100%;
@@ -11,6 +12,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: hidden;
     &::before {
         position: absolute;
         content: '';
@@ -43,8 +45,10 @@
         animation: text-expand 3s ease-in-out;
 		animation-fill-mode: forwards;
         margin-top: 2rem;
+
         @media only screen and (min-width: 475px) {
             font-size: 7rem;
+
         }
         br{
                 @media only screen and (min-width: 600px) {
@@ -58,9 +62,9 @@
         text-align: center;
         font-size: 2rem;
         font-weight: 400;
+
         @media only screen and (min-width: 475px) {
             font-size: 2.5rem;
-        }
     }
     &_textbox {
         padding-left: 15px;
