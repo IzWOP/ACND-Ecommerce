@@ -40,14 +40,24 @@ app.get('/subscribe', function (req, res) {
 ****************************/
 
 app.post('/subscribe', function (req, res) {
-    //   let incomingEmail = req.body.email_address   async function
-    // subscribe(email) {     const body = {         email_address : email,
-    // status : 'pending'       }     const response = await mailchimp     .lists
-    //  .addListMember(list_id, body)     .then(function(results) {         return
-    // results     })     .catch(function (err) {         return err         //
-    // return res.json(err.response.body.title);     }); } let results =
-    // subscribe(incomingEmail) res.json(results)
-    res.json({success: 'get call succeed!', url: req.url});
+    let incomingEmail = req.body.email_address
+    async function subscribe(email) {
+      const body = {
+           email_address : email,
+           status : 'pending'
+         }
+       const response = await mailchimp
+       .lists
+       .addListMember(list_id, body)
+       .then(function(results) {
+           res.json({result:results})
+       })
+       .catch(function (err) {
+           res.json({errResult:err.response})
+       });
+       res.json(response);
+   }
+   subscribe(incomingEmail)
 });
 
 app.post('/subscribe/*', function (req, res) {
