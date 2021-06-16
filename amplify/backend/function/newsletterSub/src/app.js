@@ -6,66 +6,78 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
+
+
 var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-// const mailchimp = require('@mailchimp/mailchimp_marketing') 
-//declare a new express app
+const mailchimp = require('@mailchimp/mailchimp_marketing');
+
+
+//set up mailchimp
+let key = process.env.MAILCHIMP_API
+let list_id = process.env.LIST_ID
+
+mailchimp.setConfig({
+  apiKey: key,
+  server: 'us1',
+});
+
+// declare a new express app
 var app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "*")
-    next()
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  next()
 });
 
-// //set up mailchimp let key = process.env.MAILCHIMP_API; let list_id =
-// process.env.LIST_ID; mailchimp.setConfig({   apiKey: key,   server: 'us1',
-// });
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/subscribe', function (req, res) {
-    // Add your code here
-    res.json({success: 'get call succeed!', url: req.url});
+app.get('/subscribe', function(req, res) {
+  // Add your code here
+  res.json({success: 'get call succeed!', url: req.url});
+});
+
+app.get('/subscribe/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'get call succeed!', url: req.url});
 });
 
 /****************************
 * Example post method *
 ****************************/
 
-app.post('/subscribe', function (req, res) {
-    let incomingEmail = req.body.email_address
-    async function subscribe(email) {
-      const body = {
-           email_address : email,
-           status : 'pending'
-         }
-       const response = await mailchimp
-       .lists
-       .addListMember(list_id, body)
-       .then(function(results) {
-           res.json({result:results})
-       })
-       .catch(function (err) {
-           res.json({errResult:err.response})
-       });
-       res.json(response);
-   }
-   subscribe(incomingEmail)
+app.post('/subscribe', function(req, res) {
+  // Add your code here
+  let incomingEmail = req.body.email_address
+  async function subscribe(email) {
+    const body = {
+         email_address : email,
+         status : 'pending'
+       }
+     const response = await mailchimp
+     .lists
+     .addListMember(list_id, body)
+     .then(function(results) {
+         res.json({result:results})
+        //  return {success:'please'}
+     })
+     .catch(function (err) {
+         res.json({errResult:err.response})
+        // return res.json(err.response.body.title);
+     });
+     res.json(response);
+ }
+ subscribe(incomingEmail)
+
 });
 
-app.post('/subscribe/*', function (req, res) {
-    // Add your code here
-    res.json({success: 'post call succeed!', url: req.url, body: req.body})
-});
 
-// Export the app object. When executing the application local this does
-// nothing. However, to port it to AWS Lambda we will create a wrapper around
-// that will load the app from this file
 module.exports = app
