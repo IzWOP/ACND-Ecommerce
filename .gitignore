@@ -36,6 +36,7 @@ amplify/.config/local-*
 amplify/mock-data
 amplify/backend/amplify-meta.json
 amplify/backend/awscloudformation
+amplify/backend/team-provider-info.json
 build/
 dist/
 node_modules/
@@ -100,3 +101,9 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
+amplify/backend/function/newsletterSub/src/package-lock.json
+amplify/backend/function/newsletterSub/src/package-lock.json
+amplify/team-provider-info.json
+amplify/backend/api/newsletterAPI/api-params.json
+amplify/backend/api/newsletterAPI/newsletterAPI-cloudformation-template.json
+amplify/backend/api/newsletterAPI/parameters.json
