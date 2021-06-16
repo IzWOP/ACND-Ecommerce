@@ -18,7 +18,7 @@
       "function": {
         "newsletterSub": {
           "deploymentBucketName": "amplify-acndecommerce-dev-140726-deployment",
-          "s3Key": "amplify-builds/newsletterSub-4a326e426b466c557364-build.zip"
+          "s3Key": "amplify-builds/newsletterSub-74556779446a396a544e-build.zip"
         }
       }
     }
