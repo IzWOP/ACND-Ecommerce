@@ -1,3 +1,46 @@
-body{
-    height: 100%;
+@import '../../../stylesheets/mixins.scss';
+
+.navbar {
+    background-color: transparent!important;
+    box-shadow: none;
+    padding-top: 25px;
+    color: #fff;
+  grid-template-columns: [full-start]minmax(30px, 30px) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(30px, 30px)[full-end];
+  position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    display: grid;
+    grid-column: 1/-1;
+  @include breakpoint(md){
+    
+  }
+  @include breakpoint(lg) {
+  
+      grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+  }
+  @include breakpoint(xl) {
+      grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+  }
+  .logo{
+    grid-column: center-start/center-end;
+    grid-row: 1;
+    align-self: center;
+}
+.nav-links{
+      grid-row: 1;
+      display: inherit;
+    grid-column: 7/11;
+    align-self: center;
+    grid-template-columns: repeat(5, minmax(min-content, 180px));
+      ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+      }
+      button{
+          
+      }
+  }
 }
