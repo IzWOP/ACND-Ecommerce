@@ -81,6 +81,9 @@
         padding-left: 15px;
         padding-right: 15px;
         margin-bottom: 4rem;
+        @include breakpoint(md){
+            padding: 0;
+        }
         @include breakpoint(lg){
             margin-bottom: 0;
         }

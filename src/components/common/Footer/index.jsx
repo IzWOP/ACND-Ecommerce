@@ -5,7 +5,7 @@ import './index.scss';
 
 //font awesome
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faFacebookF, faTwitter, faInstagram} from '@fortawesome/free-brands-svg-icons'
+import {faFacebookF, faTwitter, faInstagram} from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
     return (

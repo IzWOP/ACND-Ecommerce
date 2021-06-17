@@ -14,7 +14,7 @@ const Home = () => {
                 <div className='billboard_textbox'>
                     <h1 data-aos="fade-up"
                         data-aos-duration="2000"
-                        data-aos-easing="ease-out-cubic">A brand created to <br/>make leaders,<br/> not followers</h1>
+                        data-aos-easing="ease-out-cubic">Created to <br/>make leaders,<br/> not followers</h1>
                     <h2
                         data-aos="fade-up"
                         data-aos-delay="2000"
