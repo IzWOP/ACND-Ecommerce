@@ -1,18 +1,27 @@
-.billboard {
-
-
-    // background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1603663005/ecommerce/ACND/cloudy-mountains_dfnohd.jpg');
-    background-image: url('https://picsum.photos/1600/2000');
+@import '../../stylesheets/mixins.scss';
+.billboard { 
+    background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1/ecommerce/ACND/gym-hero.jpg');
+    // background-image: url('https://picsum.photos/1600/2000');
     width: 100%;
-    height: 50vh;
-    background-position: center;
+    height: 100%;
+    background-position: right;
     background-size: cover;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
     position: relative;
-    overflow: hidden;
+    grid-template-columns: [full-start]minmax(30px, 30px) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(30px, 30px)[full-end];
+
+    @include breakpoint(md){
+        background-position: center;
+    }
+    @include breakpoint(lg) {
+        height: 75vh;
+        min-height: 100%;
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+    }
+    @include breakpoint(xl) {
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+    }
     &::before {
         position: absolute;
         content: '';
@@ -24,54 +33,64 @@
         z-index: 0;
     }
     .background {
-        -webkit-backdrop-filter:saturate(180%) blur(20px);
-        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter:saturate(180%) blur(3px);
+        backdrop-filter: saturate(180%) blur(3px);
         position: absolute;
         width: 100vw;
-        height: 50vh;
+        height: 100%;
+        @include breakpoint(lg){
+            height: 75vh;
+            
+        }
     }
     .container {
         z-index: 1;
+        grid-column: 1/-1;
+        margin: auto 0;
+        @include breakpoint(md){
+            grid-column: center-start/center-end;
+        }
     }
 
     h1 {
-        text-align: center;
-        font-size: 5rem;
+        text-align: left;
+        font-size: 3rem;
         margin-bottom: 0;
-        font-weight: 100;
+        font-weight: 700;
         text-transform: uppercase;
-		letter-spacing: -10px;
-		opacity: 0;
-        animation: text-expand 3s ease-in-out;
-		animation-fill-mode: forwards;
         margin-top: 2rem;
-
         @media only screen and (min-width: 475px) {
-            font-size: 7rem;
+            font-size: 5rem;
 
         }
-        br{
-                @media only screen and (min-width: 600px) {
-                display: none;
-            }
+        @include breakpoint(md){
+            font-size: 5rem;
         }
     }
     h2 {
-		letter-spacing: 5px;
+        letter-spacing: 5px;
         margin: 0;
-        text-align: center;
+        text-align: left;
         font-size: 2rem;
         font-weight: 400;
-
         @media only screen and (min-width: 475px) {
             font-size: 2.5rem;
+        }
     }
     &_textbox {
         padding-left: 15px;
         padding-right: 15px;
+        margin-bottom: 4rem;
+        @include breakpoint(lg){
+            margin-bottom: 0;
+        }
         p {
-            text-align: center;
+            text-align: left;
             margin-bottom: 2rem;
+            @include breakpoint(md){
+                font-size: 1.25rem;
+                max-width: 600px;
+            }
         }
 
     }
@@ -88,11 +107,11 @@
 @keyframes text-expand {
     from {
         letter-spacing: -10px;
-		opacity: 0;
+        opacity: 0;
     }
     to {
-		opacity: 1;
+        opacity: 1;
         letter-spacing: 15px;
-		animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
     }
 }

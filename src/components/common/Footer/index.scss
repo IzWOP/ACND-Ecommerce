@@ -10,7 +10,10 @@
         padding-top: 0;
     }
     @include breakpoint(lg) {
-        grid-template-columns: [full-start]minmax(30px, 30px) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(30px, 30px)[full-end];
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+    }
+    @include breakpoint(xl) {
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr minmax(30px, 30px)[full-end];
     }
     grid-template-rows: auto auto auto auto;
 
