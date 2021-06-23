@@ -1,0 +1,148 @@
+@import '../../../../stylesheets/mixins.scss';
+
+.navbar {
+    background-color: #000;
+    box-shadow: none;
+    padding: .825rem 15px .825rem 18px;
+    color: #fff;
+    grid-template-columns: 1fr 1fr ;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    display: grid;
+    grid-column: 1/-1;
+    // box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 12%), 0 7px 10px -5px rgba(0, 0, 0, 15%);
+    @include breakpoint(md) {
+        grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(1.875rem, 1.875rem)[full-end];
+        background-color: transparent;
+    }
+    @include breakpoint(lg) {
+        padding-top: 2rem;
+        grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) 1fr [center-start] repeat(8, minmax(min-content, 9.375rem)) [center-end] 1fr minmax(1.875rem, 1.875rem)[full-end];
+    }
+    @include breakpoint(xl) {
+        grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) 1fr [center-start] repeat(8, minmax(min-content, 11.25rem)) [center-end] 1fr minmax(1.875rem, 1.875rem)[full-end];
+    }
+    .scrolled {
+        box-shadow: 0 4px 18px 0 rgba(0, 0, 0 , .12), 0 7px 10px -5px rgba(0, 0, 0, .15);
+    }
+    &-logo {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        color: #fff;
+        text-decoration: none;
+        span{
+            display: none;
+            @include breakpoint(md){
+                display: block;
+            }
+        }
+        @include breakpoint(md){
+            grid-column: center-start/center-end;
+        }
+
+    }
+    &-burger{
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        margin-right: 15px;
+        width: 20px !important;
+        height: 30px;
+    }
+    .nav-links {
+        grid-row: 1;
+        display: inherit;
+        grid-column: 8/11;
+        align-self: end;
+        grid-template-columns: repeat(5, minmax(min-content, 11.25rem));
+        &.mobile-active{
+            position: absolute;
+
+            @include breakpoint(md){
+                display: none;
+            }
+        }
+        
+        @include breakpoint(lg) {
+            grid-template-columns: repeat(2, 8.75rem) repeat(3, 3.125rem);
+            // margin-left: -80px;
+            gap: 1.25rem;
+        }
+        & > div {
+            position: relative;
+            display: inherit;
+            width: 100%;
+            justify-self: stretch;
+           &.active{
+            ul{
+                display: block;
+                opacity: 1;
+                transform: scale(1);
+            }   
+           }
+            button {
+                font-size: 1.125rem;
+                text-transform: uppercase;
+                font-weight: 400;
+                cursor: pointer;
+                background-color: transparent;
+                border-color: transparent;
+                color: #fff;
+            }
+        }
+        ul {
+            position: absolute;
+            text-align: left;
+            top: 100%;
+            left: 0;
+            list-style-type: none;
+            margin: 0;
+            color: #000;
+            background-color: #ededed;
+            justify-self: stretch;
+            z-index: 1000;
+            width: 9.375rem;
+            border-radius: 0.375rem;
+            display: none;
+            padding: 0.3125rem 0;
+            border: 0;
+            opacity: 0;
+            transform: scale(0);
+            transform-origin: 0 0;
+            will-change: transform,opacity;
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1),opacity 0.2s cubic-bezier(.4,0,.2,1);
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+        
+          
+
+            li {
+                cursor: pointer;
+                padding-left: 0.625rem;
+                margin: 1rem 0;
+                font-size: 0.9rem;
+            }
+            .dropdown-button{
+                display: flex;
+                color: #000;
+                font-size: 0.9rem;
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+        }
+      
+        .nav-icons {
+            margin: auto auto auto 0;
+            background-color: transparent;
+            border: 0;
+            color: #fff;
+            font-size: 1.125rem;
+            cursor: pointer;
+        }
+    }
+}

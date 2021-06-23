@@ -1,0 +1,156 @@
+@import '../../../../stylesheets/mixins.scss';
+
+.navbar-mobile {
+    position: relative;
+    background-color: #000;
+    box-shadow: none;
+    padding: .825rem 15px .825rem 18px;
+    color: #fff;
+    grid-template-columns: 1fr 1fr ;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    display: grid;
+    grid-column: 1/-1;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 12%), 0 7px 10px -5px rgba(0, 0, 0, 15%);
+
+    // .scrolled {
+    //     box-shadow: 0 4px 18px 0 rgba(0, 0, 0 , .12), 0 7px 10px -5px rgba(0, 0, 0, .15);
+    // }
+    .mobile-header{
+        display: grid;
+        grid-column: 1/-1;
+        .navbar-logo {
+            grid-column: 1;
+            grid-row: 1;
+            align-self: center;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            color: #fff;
+            text-decoration: none;
+        }
+        .navbar-burger{
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: end;
+            margin-right: 15px;
+            width: 20px !important;
+            height: 30px;
+        }
+        path{
+            pointer-events: none;
+        }
+    }
+    .mobile-nav{
+        &-container{
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            left: -100%;
+            opacity: 0;
+            transition: all .3s;
+            &.mobile-active{
+                left: 0;
+                opacity: 1;
+            }
+            .container-close{
+                height: 100vh;
+                width: 15vw;
+                display: inline-block;
+                background-color: rgba(0, 0, 0, .75);
+                path{
+                    pointer-events: none;
+                }
+            }
+        }
+        &-close{
+            width: 100%;
+            margin-top: 1rem;
+            font-size: 25px;
+        }
+        
+        &-links {
+            height: 100vh;
+            width: 85vw;
+            float: left;
+            background-color: #fff;
+            color: #000;
+            display: grid;
+            grid-template-rows: repeat(5,min-content);
+         
+    
+            & > div {
+                position: relative;
+                display: inherit;
+                width: 100%;
+                justify-self: stretch;
+                align-items: stretch;
+                min-height: 75px;
+                &:not(:last-of-type) { 
+                    button{
+
+                        border-bottom: 1px solid #7d7d7d;
+                    }
+                 }
+                
+               &.active{
+                   button{
+                       margin-top: 1rem;
+                       border-bottom: none;
+                   }
+
+                    ul{
+                        display: block;
+                        opacity: 1;
+                        transform: scale(1);
+                        width:80%;
+                        border-bottom: 1px solid #7d7d7d;
+                        margin: 0 auto;
+                        padding-inline-start: 0;
+                    }   
+               }
+                button {
+                    margin:0 auto;
+                    font-size: 1.125rem;
+                    text-transform: uppercase;
+                    font-weight: 400;
+                    cursor: pointer;
+                    background-color: transparent;
+                    border-color: transparent;
+                    width: 80%;
+                    path{
+                        pointer-events: none;
+                    }
+                    .svg-inline--fa{
+                        pointer-events: none;
+                    }
+                }
+            }
+            ul {
+                text-align: left;
+                list-style-type: none;
+                color: #000;
+                justify-self: stretch;
+                display: none;
+            
+    
+                li {
+                    cursor: pointer;
+                    padding-left: 0.625rem;
+                    margin: 1rem 0;
+                    font-size: 0.9rem;
+                }
+            }
+          
+            // .mobile-icons {
+            //     // margin: auto;
+            //     color: #000;
+            //     font-size: 1.125rem;
+            //     cursor: pointer;
+            //     // display: grid;
+            // }
+        }
+    }
+}

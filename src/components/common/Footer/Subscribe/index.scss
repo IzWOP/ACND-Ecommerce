@@ -4,8 +4,8 @@ $green: #1ECD97;
 @import "../../../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
 @import '../../../../stylesheets/mixins.scss';
 .subscribe {
-    background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1/ecommerce/ACND/deads.jpg');
-    // background-image: url('https://picsum.photos/1600/2000');
+    // background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1/ecommerce/ACND/deads.jpg');
+    background-image: url('https://picsum.photos/1600/2000');
     background-position: 50% 25%;
     background-size: cover;
     height: 300px;
@@ -178,13 +178,13 @@ $green: #1ECD97;
         border-color: $gray;
         border-width: 3px;
         font-size: 0;
-        border-left-color: #000;
+        border-left-color: #FF0000;
         animation: rotating 2s 0.25s linear infinite;
         &:after {
             content: "";
         }
         &:hover {
-            color: #000;
+            color: #FF0000;
             background: white;
         }
     }
