@@ -97,7 +97,7 @@ const NavDesk = () => {
     return <> 
     <nav className='navbar'>
         <Link to='/' className='navbar-logo'>
-            ACND <span>Lifestyle</span>
+            ACND Lifestyle
         </Link>
         
         <div className='nav-links' ref={ref}>
