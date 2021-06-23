@@ -1,7 +1,6 @@
 @import '../../../../stylesheets/mixins.scss';
 
 .navbar {
-    background-color: #000;
     box-shadow: none;
     padding: .825rem 15px .825rem 18px;
     color: #fff;
@@ -12,60 +11,62 @@
     z-index: 1030;
     display: grid;
     grid-column: 1/-1;
-    // box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 12%), 0 7px 10px -5px rgba(0, 0, 0, 15%);
+    transition: all .3s ease 0s;
+    border-radius: 0 0 5px 5px;
+
     @include breakpoint(md) {
         grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(1.875rem, 1.875rem)[full-end];
         background-color: transparent;
+        padding: 2rem 0;
     }
     @include breakpoint(lg) {
-        padding-top: 2rem;
+        padding: 2rem 0;
         grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) 1fr [center-start] repeat(8, minmax(min-content, 9.375rem)) [center-end] 1fr minmax(1.875rem, 1.875rem)[full-end];
     }
     @include breakpoint(xl) {
         grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) 1fr [center-start] repeat(8, minmax(min-content, 11.25rem)) [center-end] 1fr minmax(1.875rem, 1.875rem)[full-end];
     }
-    .scrolled {
+    &.scrolled {
+        background-color: #fff;
+        color: #000;
         box-shadow: 0 4px 18px 0 rgba(0, 0, 0 , .12), 0 7px 10px -5px rgba(0, 0, 0, .15);
+        .navbar-logo{
+            color: #000;
+        }
+        .nav-links{
+            color: #000;
+            button{
+                color: #000;
+            }
+        }
     }
     &-logo {
-        grid-column: 1;
+        grid-column: 2/5;
         grid-row: 1;
         align-self: center;
         font-size: 1.25rem;
         text-transform: uppercase;
         color: #fff;
         text-decoration: none;
-        span{
-            display: none;
-            @include breakpoint(md){
-                display: block;
-            }
+        @include breakpoint(xl){
+            grid-column: 3/5;
         }
-        @include breakpoint(md){
-            grid-column: center-start/center-end;
+        @include breakpoint(xl){
+            grid-column: 3/5;
         }
 
-    }
-    &-burger{
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
-        margin-right: 15px;
-        width: 20px !important;
-        height: 30px;
     }
     .nav-links {
         grid-row: 1;
         display: inherit;
-        grid-column: 8/11;
+        color: #fff;
         align-self: end;
         grid-template-columns: repeat(5, minmax(min-content, 11.25rem));
-        &.mobile-active{
-            position: absolute;
-
-            @include breakpoint(md){
-                display: none;
-            }
+        @include breakpoint(md){
+            grid-column: 7/10;
+        }
+        @include breakpoint(lg){
+            grid-column: 8/11;
         }
         
         @include breakpoint(lg) {
@@ -93,6 +94,9 @@
                 background-color: transparent;
                 border-color: transparent;
                 color: #fff;
+                .svg-inline--fa,path{
+                    pointer-events: none;
+                }
             }
         }
         ul {
@@ -128,21 +132,24 @@
             }
             .dropdown-button{
                 display: flex;
-                color: #000;
+                // color: #000;
                 font-size: 0.9rem;
                 background-color: transparent;
                 border: 0;
                 cursor: pointer;
+                path{
+            pointer-events: none;
+        }
             }
         }
       
-        .nav-icons {
-            margin: auto auto auto 0;
-            background-color: transparent;
-            border: 0;
-            color: #fff;
-            font-size: 1.125rem;
-            cursor: pointer;
-        }
+        // .nav-icons {
+        //     margin: auto auto auto 0;
+        //     background-color: transparent;
+        //     border: 0;
+        //     // color: #fff;
+        //     font-size: 1.125rem;
+        //     cursor: pointer;
+        // }
     }
 }

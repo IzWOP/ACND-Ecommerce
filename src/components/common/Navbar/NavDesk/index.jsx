@@ -8,24 +8,20 @@ import {faUserCircle} from '@fortawesome/free-regular-svg-icons';
 import './index.scss'
 
 const NavDesk = () => {
-    // const [click, setClick] = useState(false);
+    //set menu state
     const[activeMenu, setActive] = useState(null);
-
-    // const closeMobileMenu = () => setClick(false);
-
+    //set scroll state to change background color
+    const [scrollState, setScrollState] = useState("top");
+    //checks anything clicked to match set navbar classes
      const handleClick=(e)=> {
-        // console.log(e.target.classList.contains('navbar-burger'));
-        // if(e.target.classList.contains('navbar-burger')){
-        //     // setClick(click);
-        //     console.log('navbarburger came out true');
-        // }else{
-        //     setActive(e.target.classList[0]) 
-        // }
         setActive(e.target.classList[0])
       }
-
+      //variable to update later
+      
+      //click outsite of nav reference
       const ref = useRef(null);
         useEffect(() => {
+            //checks state to make sure it matches
             switch (activeMenu) {
                 case 'products':
                     document.querySelector('.products').parentElement.classList.add('active')
@@ -51,25 +47,37 @@ const NavDesk = () => {
                     setActive(null)
                     break;
             }
-
+            let listener = null
+            //listening to set state to update navbar background
+            listener = document.addEventListener("scroll", e => {
+                var scrolled = document.scrollingElement.scrollTop
+                if (scrolled >= 120) {
+                  if (scrollState !== "amir") {
+                    setScrollState("amir")
+                    document.querySelector('nav').classList.add('scrolled')
+                  }
+                } else {
+                  if (scrollState !== "top") {
+                    setScrollState("top")
+                    document.querySelector('nav').classList.remove('scrolled')
+                  }
+                }
+              })
+              //event handler for not clicking within reference div(navbar)
             function handleClickOutside(e){
                 if(ref.current && !ref.current.contains(e.target)){
                     setActive(null)
                 }
             }
-            // if(click){
-            //     document.querySelector('.nav-links').classList.add('mobile-active')
-            // } else{
-            //     document.querySelector('.nav-links').classList.remove('mobile-active')
-            // }
-    
             document.addEventListener('mousedown', handleClickOutside);
             return ()=>{
+                //stops infinite loops
+                document.removeEventListener("scroll", listener)
                 document.removeEventListener('mousedown', handleClickOutside)
             };
            
-        }, [activeMenu,ref])
-
+        }, [activeMenu,ref,scrollState])
+        //to add mouse over functionality later. basic functionality is priority and deadline
     // const onMouseEnter = () => {
     //     if (window.innerWidth < 960) {
     //         setDropdown(false);
@@ -91,8 +99,6 @@ const NavDesk = () => {
         <Link to='/' className='navbar-logo'>
             ACND <span>Lifestyle</span>
         </Link>
-
-        {/* <FontAwesomeIcon onClick={handleClick} className='navbar-burger' icon={faBars}/> */}
         
         <div className='nav-links' ref={ref}>
             <div>
@@ -120,8 +126,12 @@ const NavDesk = () => {
                     <li>Sign out</li>
                 </ul>
             </div>
-            <button className='cart nav-icons'><FontAwesomeIcon icon={faShoppingCart}/></button>
-            <button className='nav-icons'><FontAwesomeIcon icon={faSearch}/></button>
+            <div className="div">
+                <button className='cart'><FontAwesomeIcon icon={faShoppingCart}/></button>
+            </div>
+            <div>
+                <button className=''><FontAwesomeIcon icon={faSearch}/></button>
+            </div>
         </div>
     </nav> 
     </>

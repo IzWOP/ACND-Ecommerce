@@ -4,7 +4,8 @@ import {Auth} from 'aws-amplify';
 
 console.log(Auth);
 
-
+//YOU THOUGHT YOU WHORE
+//lowkey failure ...working up to it. 
 
 const initialState = {
   user: undefined,
@@ -18,16 +19,3 @@ const UserState =(props)=>{
 
 }
 
-
-//  export const UserVerification = (props) => {
-//    const userVerfication = ()=>{
-// console.log('verfied');
-//    }
-
-
-// return (
-//         <UserContext.Provider>
-//           {props.children}
-//         </UserContext.Provider>
-//         );
-//  }
