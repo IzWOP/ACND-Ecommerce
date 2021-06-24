@@ -8,9 +8,8 @@
     left: 0;
     z-index: 1030;
     display: grid;
-    transition: all .3s ease 0s;
+    transition: all 0.3s ease 0s;
     border-radius: 0 0 5px 5px;
-
     @include breakpoint(md) {
         grid-template-columns: [full-start]minmax(1.875rem, 1.875rem) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(1.875rem, 1.875rem)[full-end];
         background-color: transparent;
@@ -27,12 +26,12 @@
         background-color: #fff;
         color: #000;
         box-shadow: 0 4px 18px 0 rgba(0, 0, 0 , .12), 0 7px 10px -5px rgba(0, 0, 0, .15);
-        .navbar-logo{
+        .navbar-logo {
             color: #000;
         }
-        .nav-links{
+        .nav-links {
             color: #000;
-            button{
+            button {
                 color: #000;
             }
         }
@@ -46,10 +45,10 @@
         text-transform: uppercase;
         color: #fff;
         text-decoration: none;
-        @include breakpoint(md){
+        @include breakpoint(md) {
             grid-column: 2/7;
         }
-        @include breakpoint(lg){
+        @include breakpoint(lg) {
             grid-column: 3/7;
         }
 
@@ -60,13 +59,12 @@
         color: #fff;
         align-self: end;
         grid-template-columns: repeat(5, minmax(min-content, 11.25rem));
-        @include breakpoint(md){
+        @include breakpoint(md) {
             grid-column: 7/10;
         }
-        @include breakpoint(lg){
+        @include breakpoint(lg) {
             grid-column: 8/11;
         }
-        
         @include breakpoint(lg) {
             grid-template-columns: repeat(2, 8.75rem) repeat(3, 3.125rem);
             // margin-left: -80px;
@@ -77,13 +75,13 @@
             display: inherit;
             width: 100%;
             justify-self: stretch;
-           &.active{
-            ul{
-                display: block;
-                opacity: 1;
-                transform: scale(1);
-            }   
-           }
+            &.active {
+                ul {
+                    display: block;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
             button {
                 font-size: 1.125rem;
                 text-transform: uppercase;
@@ -92,7 +90,8 @@
                 background-color: transparent;
                 border-color: transparent;
                 color: #fff;
-                .svg-inline--fa,path{
+                .svg-inline--fa,
+                path {
                     pointer-events: none;
                 }
             }
@@ -119,8 +118,6 @@
             will-change: transform,opacity;
             transition: transform 0.3s cubic-bezier(.4,0,.2,1),opacity 0.2s cubic-bezier(.4,0,.2,1);
             box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-        
-          
 
             li {
                 cursor: pointer;
@@ -128,26 +125,17 @@
                 margin: 1rem 0;
                 font-size: 0.9rem;
             }
-            .dropdown-button{
+            .dropdown-button {
                 display: flex;
                 // color: #000;
                 font-size: 0.9rem;
                 background-color: transparent;
                 border: 0;
                 cursor: pointer;
-                path{
-            pointer-events: none;
-        }
+                path {
+                    pointer-events: none;
+                }
             }
         }
-      
-        // .nav-icons {
-        //     margin: auto auto auto 0;
-        //     background-color: transparent;
-        //     border: 0;
-        //     // color: #fff;
-        //     font-size: 1.125rem;
-        //     cursor: pointer;
-        // }
     }
 }
