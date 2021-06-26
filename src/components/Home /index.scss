@@ -119,10 +119,23 @@
             margin: -60px 0 0;
             grid-column: 2/-2;
         }
+
+        h3 {
+            font-size: 2.25rem;
+            line-height: 1.5em;
+            font-weight: 300;
+            @include breakpoint(md) {
+                font-size: 2.25rem;
+                line-height: 1.5em;
+            }
+        }
     }
     .intro {
         display: inherit;
         @include breakpoint(md) {
+            grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr;
+        }
+        @include breakpoint(lg) {
             grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr;
         }
         .container {
@@ -137,7 +150,7 @@
                 max-width: initial;
                 grid-column: 4/8;
             }
-            h3 {
+            h2 {
                 color: rgba( 0,0,0, .50);
                 text-align: center;
                 font-size: 1.5rem;
@@ -159,18 +172,12 @@
         @include breakpoint(md) {
             display: grid;
             padding: 0;
+            grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr;
+        }
+        @include breakpoint(lg) {
             grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr;
         }
 
-        h3 {
-            font-size: 2.25rem;
-            line-height: 1.5em;
-            font-weight: 300;
-            @include breakpoint(md){
-                font-size: 2.25rem;
-                line-height: 1.5em;
-            }
-        }
         .container {
             @include breakpoint(md) {
                 grid-column: 3/9;
@@ -191,10 +198,8 @@
             }
         }
         &-item {
-            
-            margin: auto;
-            margin-bottom: 4rem;
-            
+
+            margin: auto auto 4rem;
             @include breakpoint(sm) {
                 max-width: 300px;
             }
@@ -239,20 +244,163 @@
             }
         }
     }
-    .quality{
+
+    .quality {
         padding: 0 15px;
+        display: grid;
+
+        margin-top: 4rem;
+        margin-bottom: 4rem;
         @include breakpoint(md) {
-            display: grid;
-            padding: 0;
+            padding:0;
+            grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr;
+        }
+        @include breakpoint(lg) {
             grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr;
         }
-        .container{
+        .text-box {
+            grid-column: 1/-1;
+            grid-row: 2;
+            @include breakpoint(md) {
+                grid-row: 1;
+                grid-column: 3/6;
+                align-self: center;
+
+            }
+            h3 {
+                font-size: 2.25rem;
+                margin-bottom: .5rem;
+                @include breakpoint(md) {
+                    font-size: 1.5625rem;
+                    line-height: 1.5;
+                    margin: 0;
+                    margin-bottom: .5rem;
+
+                }
+
+            }
+            h6 {
+                font-size: .8rem;
+                line-height: 1.5em;
+                margin: 0;
+                margin-bottom: 1rem;
+                color: #999;
+                font-weight: 600;
+                text-transform: uppercase;
+                @include breakpoint(md) {
+                    font-size: 1rem;
+                    line-height: 1.5em;
+                    margin: 0;
+                    margin-bottom: 1rem;
+                }
+                }
+            p {
+                padding-right: 6rem;
+                max-width: 500px;
+                }
+        }
+        .image-box {
+            grid-column: 1/-1;
+            grid-row: 1;
+            display: flex;
+            justify-content: center;
+            @include breakpoint(md) {
+                grid-column: 6/9;
+            }
+            img {
+                width: 50%;
+                max-width: 400px;
+                justify-self: center;
+                @include breakpoint(md) {
+                    width: 75%;
+                }
+            }
+        }
+        .container {
             @include breakpoint(md) {
                 grid-column: 3/9;
                 display: inherit;
+                grid-template-columns: repeat(8, minmax(min-content, 150px));
+
             }
+
         }
     }
+
+    .val-props{
+                //finish image background blur
+                padding: 0 15px;
+                margin-top: 4rem;
+                @include breakpoint(md) {
+                    display: grid;
+                    padding: 0;
+                    grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr;
+                }
+                @include breakpoint(lg) {
+                    grid-template-columns: 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr;
+                }
+        
+                .container {
+                    @include breakpoint(md) {
+                        grid-column: 3/9;
+                        display: inherit;
+                    }
+                }
+                .val-prop-cont {
+                    @include breakpoint(sm) {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        justify-content: space-between;
+                    }
+                    @include breakpoint(md) {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+                }
+                .val-prop {
+        
+                    margin: auto auto 4rem;
+                    @include breakpoint(sm) {
+                        max-width: 300px;
+                    }
+                    @include breakpoint(smd) {
+                        max-width: 230px;
+                    }
+                    @include breakpoint(lg) {
+                        max-width: 250px;
+                    }
+                    h4 {
+                        text-align: center;
+                        font-size: 1.25rem;
+                        font-weight: 400;
+                    }
+                    p {
+                        text-align: center;
+                        color: #999;
+                    }
+                    .val-prop-icon {
+                            position: relative;
+                            padding: 0;
+                            z-index: 1;
+                            display: flex;
+                            justify-content: center;
+                            img {
+                                width: 100%;
+                                max-width: 250px;
+                                pointer-events: none;
+                            }
+                            svg{
+                                width: 150px;
+                                max-width: 250px;
+                                height: auto;
+                            }
+                    }
+                }
+
+    }
+  
 
 }
 @keyframes rotating {

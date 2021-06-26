@@ -19,6 +19,7 @@ $green: #1ECD97;
     @include breakpoint(xl) {
         grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr minmax(30px, 30px)[full-end];
     }
+
     &::before {
         position: absolute;
         content: '';
