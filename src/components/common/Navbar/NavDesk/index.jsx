@@ -51,7 +51,7 @@ const NavDesk = () => {
             //listening to set state to update navbar background
             listener = document.addEventListener("scroll", e => {
                 var scrolled = document.scrollingElement.scrollTop
-                if (scrolled >= 120) {
+                if (scrolled >= 75) {
                   if (scrollState !== "amir") {
                     setScrollState("amir")
                     document.querySelector('nav').classList.add('scrolled')
@@ -77,7 +77,8 @@ const NavDesk = () => {
             };
            
         }, [activeMenu,ref,scrollState])
-        //to add mouse over functionality later. basic functionality is priority and deadline
+        
+    //to add mouse over functionality later. basic functionality is priority and deadline
     // const onMouseEnter = () => {
     //     if (window.innerWidth < 960) {
     //         setDropdown(false);
