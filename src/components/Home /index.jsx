@@ -127,11 +127,13 @@ const Home = () => {
             </section>
             <section className="cta-products">
                 <div className="container">
-                    <h3>Please buy my shit</h3>
+                    <h3>"You will look at the products and buy something" <br/>- Obiwan (probably)</h3>
+                    <p>something about how awesome this website looks and how much it inspired you to buy it all.</p>
+                    <button className='cta'>Products</button>
                 </div>
             </section>
         </div>
-        <section className=''></section>
+        <section className='fill this in with blog or something'></section>
     </div>
 
 };
