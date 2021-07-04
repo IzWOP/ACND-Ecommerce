@@ -10,6 +10,7 @@ import './stylesheets/global.scss';
 //components here
 import Home from './components/Home ';
 import Login from './components/Login';
+import Products from './components/Products';
 import Layout from './components/common/Layout';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Layout>
+					<Route exact path='/products' component={Products} />
 					<Route exact path='/login' component={Login} />
 					<Route exact path='/' component={Home} />
 				</Layout>

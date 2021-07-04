@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShippingFast,faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 //stylesheets
@@ -24,12 +24,6 @@ const Home = () => {
                         data-aos-delay="2000"
                         data-aos-duration="2000"
                         data-aos-easing="ease-out-cubic">Coming Soon</h2>
-                    <p
-                        data-aos="fade-up"
-                        data-aos-delay="500"
-                        data-aos-anchor-placement="top-bottom"
-                        data-aos-duration="2000"
-                        data-aos-easing="ease-out-cubic"></p>
 
                 </div>
             </div>
@@ -129,7 +123,9 @@ const Home = () => {
                 <div className="container">
                     <h3>"You will look at the products and buy something" <br/>- Obiwan (probably)</h3>
                     <p>something about how awesome this website looks and how much it inspired you to buy it all.</p>
-                    <button className='cta'>Products</button>
+                    <Link to='/products'>
+                        <button className='cta'>Products</button>
+                    </Link>
                 </div>
             </section>
         </div>
