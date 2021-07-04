@@ -103,8 +103,13 @@ const NavDesk = () => {
         
         <div className='nav-links' ref={ref}>
             <div>
+            
                 <button className='products' onClick={handleClick}>Products</button>
+            
                 <ul>
+                    <Link to='/products'>
+                        <li>All Products</li>
+                    </Link>
                     <li>Men</li>
                     <li>Women</li>
                     <li>Accessories</li>
