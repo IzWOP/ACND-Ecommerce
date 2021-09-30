@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import {Link} from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
 //yup schemas
 const signUpSchema = yup
     .object()

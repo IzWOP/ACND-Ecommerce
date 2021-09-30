@@ -128,7 +128,9 @@ const NavDesk = () => {
                 <ul>
                     <li>Account Information</li>
                     <li>Orders</li>
-                    <li>Sign in</li>
+                    <Link to='/auth/login'>
+                        <li>Sign in</li>
+                    </Link>
                     <li>Sign out</li>
                 </ul>
             </div>

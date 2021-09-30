@@ -9,9 +9,11 @@ import './stylesheets/global.scss';
 
 //components here
 import Home from './components/Home ';
-import Login from './components/Login';
-import Products from './components/Products';
 import Layout from './components/common/Layout';
+import Login from './components/Auth/Login';
+// import Logout from './components/Auth/Logout';
+import Products from './components/Products';
+import SignUp from './components/Auth/SignUp'
 
 function App() {
 	AOS.init();
@@ -19,8 +21,12 @@ function App() {
 		<Router>
 			<Switch>
 				<Layout>
+					{/* auth */}
+					<Route exact path='/auth/login' component={Login} />
+					{/* <Route exact path='/auth/logout' component={Logout} /> */}
+					<Route exact path='/auth/signup' component={SignUp} />
+					{/* normal */}
 					<Route exact path='/products' component={Products} />
-					<Route exact path='/login' component={Login} />
 					<Route exact path='/' component={Home} />
 				</Layout>
 			</Switch>
