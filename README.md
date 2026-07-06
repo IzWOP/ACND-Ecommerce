@@ -1,68 +1,111 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ACND — Ecommerce (unfinished)
 
-## Available Scripts
+A pre-launch "Coming Soon" landing page for **ACND**, a lifestyle / clothing brand
+intended to sell t-shirts. Built with Create React App + AWS Amplify.
 
-In the project directory, you can run:
+> **Status: never launched.** Only the newsletter email-capture on the home page was
+> wired up. The actual store (product catalog, cart, checkout, payments) was never
+> built, and the login/auth flow was abandoned half-finished. This README documents
+> what exists so the project can be picked back up — or scavenged for parts — later.
 
-### `yarn start`
+---
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## What actually works
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **Home / landing page** (`src/components/Home /index.jsx`) — the "Coming Soon"
+  billboard with an animated email-subscribe form.
+- **Newsletter signup** — the form POSTs to an API Gateway endpoint backed by a
+  Lambda (`amplify/backend/function/newsletterSub`) that adds the email to a
+  Mailchimp list with `status: 'pending'` (double opt-in). This is the only
+  end-to-end feature.
 
-### `yarn test`
+## What is stubbed / abandoned
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Area | File(s) | State |
+|---|---|---|
+| Auth / login | `src/components/Login/*` | Half-built. Not routed in `App.js`. `SignUp` calls Cognito; `SignIn` only `console.log`s (real call commented out); `Confirmation.jsx` is a stub. |
+| User context | `src/components/Context/UserContext.jsx` | Empty `UserState`, everything commented out. |
+| Products | `src/components/products.jsx` | **Empty file.** No catalog exists. |
+| Navbar | `src/components/common/Navbar/index.jsx` | Placeholder — renders `<h1>navbar</h1>`. |
+| Footer | `src/components/common/Footer/index.jsx` | Empty file. |
+| Cart / checkout / payments | — | **Do not exist.** Never started. |
 
-### `yarn build`
+## Architecture
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+React (CRA) SPA
+  └─ Home page ──POST /subscribe──▶ API Gateway (newsletterAPI)
+                                        └─▶ Lambda (newsletterSub, Express)
+                                                └─▶ Mailchimp Marketing API
+AWS Cognito (auth) — provisioned but unused by the live app
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- **Frontend:** React 16, `react-router-dom` v5, `react-hook-form` v7 + `yup`,
+  SCSS (`node-sass`), AOS for scroll animations, FontAwesome / react-icons.
+- **Backend:** AWS Amplify — Cognito user pool (`cognito9647c212`), a REST API
+  (`newsletterAPI`), and a Node/Express Lambda (`newsletterSub`).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `yarn eject`
+## Running it locally
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Requires Node (this predates the repo pinning a version — Node 14/16-era CRA 3).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+yarn install
+yarn start        # http://localhost:3000
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Amplify config is not committed** (gitignored): `src/aws-exports.js`,
+`awsconfiguration.json`, and `amplify/backend/awscloudformation` are excluded. To
+run the newsletter path you must re-pull the backend:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+amplify pull        # regenerates src/aws-exports.js from the cloud backend
+```
 
-## Learn More
+The Lambda reads two environment variables (set in the Amplify function config):
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `MAILCHIMP_API` — Mailchimp API key
+- `LIST_ID` — target Mailchimp audience/list id
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Known issues / gotchas (read before reviving)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+These are real bugs and liabilities found in the current code:
 
-### Analyzing the Bundle Size
+1. **Lambda double-sends the response** (`newsletterSub/src/app.js`) — the
+   `.then`/`.catch` call `res.json()` and then line ~76 calls it again with an
+   undefined value. Works by luck; rewrite as a single `try/catch`.
+2. **Lambda dependency in the wrong place** — `@mailchimp/mailchimp_marketing` is
+   listed under `devDependencies` in `newsletterSub/src/package.json`, so it may
+   not be installed in the deployed function. Move it to `dependencies`.
+3. **Hardcoded Mailchimp datacenter** — `server: 'us1'` must match your API key's
+   suffix (e.g. `-us21`), or every call 404s. Derive it from the key.
+4. **Wide-open CORS** — the Lambda allows `Origin: *` and `Headers: *` on an
+   unauthenticated write endpoint. Lock to the real domain; add rate limiting.
+5. **Home page manipulates the DOM directly** — `document.querySelector` + manual
+   `classList` mutation during render instead of React state/refs. Fragile; can
+   throw on first render. Also calls `useForm()` twice.
+6. **Placeholder / unprofessional copy** — button labels and status messages
+   ("Submit hoe", "Sorry Bro...", `value="Submitt"`) need real copy before launch.
+7. **Stale, insecure dependencies** — CRA 3 / React 16 / `node-sass` 4 /
+   `aws-amplify` 3 are all years out of date. Run `npm audit`; expect a migration
+   (Vite + React 18/19 + `sass` + `aws-amplify` v6) to be the real cost of reviving.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+---
 
-### Making a Progressive Web App
+## If reviving to actually sell t-shirts
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+The commerce half of this project does not exist. Rather than extend this stack,
+it would likely be faster to either stand up a Shopify store or start fresh with a
+Next.js + Stripe template. The reusable pieces here are the Mailchimp-via-Lambda
+newsletter pattern and the landing-page form/animation UI.
 
-### Advanced Configuration
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Original Create React App scripts
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+`yarn start` (dev) · `yarn build` (production build) · `yarn test` · `yarn eject`.
+See the [CRA docs](https://facebook.github.io/create-react-app/docs/getting-started).
