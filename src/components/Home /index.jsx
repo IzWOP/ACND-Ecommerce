@@ -1,195 +1,135 @@
-import React, {useState, useEffect} from 'react';
-import {API} from 'aws-amplify';
-import {useForm} from "react-hook-form";
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import '../../utils/api-config';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShippingFast,faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 //stylesheets
 import './index.scss';
 
-const emailSchema = yup
-    .object()
-    .shape({
-        email: yup
-            .string()
-            .email()
-            .required('Email is required')
-    });
-
 const Home = () => {
 
-    //setting up email state/result for button ui and error results
-    const [subscribeStatus,
-        setStatus] = useState({email_status: null})
-    const [subscribeResult,
-        setResult] = useState({email_result: null})
-    const {register, handleSubmit, formState: {
-            errors
-        }} = useForm({resolver: yupResolver(emailSchema)});
-    useForm({resolver: yupResolver(emailSchema)});
+    return <div className="home">
 
-    //grabbing button and form for UI animations
-    let button = document.querySelector('.submit');
-    let formSection = document.querySelector('form');
-
-    function errorReport() {
-        button
-            .classList
-            .remove("clicked");
-        button
-            .classList
-            .add("error");
-        callback()
-    }
-    function validate() {
-        button
-            .classList
-            .remove("clicked");
-        button
-            .classList
-            .add("validate");
-        callback()
-    }
-    //return to previous state
-    function callback() {
-        setTimeout(function () {
-            if (button.classList.contains('validate')) {
-                button
-                    .classList
-                    .remove("validate");
-                formSection
-                    .classList
-                    .add('hide')
-                setTimeout(function () {
-                    formSection.style.display = 'none'
-                }, 5000);
-            } else if (button.classList.contains('error')) {
-                button
-                    .classList
-                    .remove("error");
-            } else{
-                button
-                    .classList
-                    .remove("clicked");
-            }
-        }, 3050);
-    }
-
-    //send to internal API to hit mailchimp
-    function sendData(email) {
-        //setting up API sending
-        const apiName = 'newsletterAPI';
-        const path = '/subscribe';
-        const myInit = {
-            body: {
-                email_address: email
-            },
-        };
-        //loading on button
-        button.classList.add('clicked');
-        return API
-            .post(apiName, path, myInit)
-            .then(res => {
-                if (res.errResult) {
-                    //catch error first and set err UI
-                    errorReport()
-                    let errResponse = JSON.parse(res.errResult.text)
-                    setResult({email_result: errResponse.title})
-                } else if (res.result.status === 'pending') {
-                    //if successful we validate
-                    validate()
-                    setResult({email_result: res.result.status})
-                } else {
-                    //just in case we clear and start over
-                    setResult({email_result: null});
-                    callback();
-                    return;
-                }
-            })
-            .catch((err)=>{
-                //only for huge main website error catching/api
-                console.log(err);
-                setResult({email_result: 'error'})
-                callback()
-            });
-    }
-
-    const onSubmitEmail = (formData) => {
-        //  cleaning setting up data
-        const email = formData.email;
-        //send said parameter into function clean
-        sendData(email)
-    }
-    //setting the status to notify the user if email subscription succeeded
-    useEffect(() => {
-        switch (subscribeResult.email_result) {
-            case 'Member Exists':
-                setStatus({email_status: "Sorry Bro, that email already exists."});
-                setTimeout(function () {
-                    setStatus({email_status: null})
-                }, 3050);
-                break;
-            case 'Forgotten Email Not Subscribed':
-                setStatus({email_status: "Sorry My Dude, that email is already in the system."});
-                window.open('http://eepurl.com/hyzFTv', '_blank');
-                break;
-            case 'pending':
-                setStatus({email_status: "Hell yes, you're in! Check your email to confirm."});
-                break;
-            case 'error':
-                //huge website error default fallback
-                setStatus({email_status: "Oh no, somethings broken. Subscribe in opened page"});
-                window.open('http://eepurl.com/hyzFTv', '_blank');
-                setTimeout(function () {
-                    setStatus({email_status: null})
-                }, 3050);
-                break;
-            default:
-                //setting the state just another fallback
-                setStatus({email_status: null});
-                break;
-        }
-    }, [subscribeResult]);
-
-    return <div className='billboard'>
-        <div className='background'></div>
-        <div className='container'>
-            <div className='row'>
+        <section className='billboard'>
+            <div className='background'></div>
+            <div className='container'>
                 <div className='billboard_textbox'>
-                    <h1>ACND</h1>
+                    <h1
+                        data-aos="fade-up"
+                        data-aos-duration="2000"
+                        data-aos-easing="ease-out-cubic">Created to
+                        <br/>make leaders,<br/>
+                        not followers</h1>
                     <h2
-                        data-aos="zoom-in"
-                        data-aos-delay="3000"
+                        data-aos="fade-up"
+                        data-aos-delay="2000"
                         data-aos-duration="2000"
                         data-aos-easing="ease-out-cubic">Coming Soon</h2>
-                    <p
-                        data-aos="fade-up"
-                        data-aos-delay="500"
-                        data-aos-duration="1500"
-                        data-aos-easing="ease-out-cubic">
-                        A lifestyle and clothing brand to help you ascend.
-                    </p>
-                    <form
-                        onSubmit={handleSubmit(onSubmitEmail)}
-                        data-aos-delay="3000"
-                        data-aos="zoom-in"
-                        data-aos-duration="2000"
-                        data-aos-easing="ease-out-cubic">
-                        <input
-                            className='form-item'
-                            name="email"
-                            placeholder="Email"
-                            {...register("email",{pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"})}/> 
-                            {errors.email && <p>{errors.email.message}</p>}
-                        <button className='submit' type="submit" value="Submitt"></button>
-                    </form>
-                    {subscribeStatus.email_status !== null && <div className='email-status'>
-                        {subscribeStatus.email_status}
-                    </div>}
+
                 </div>
             </div>
+        </section>
+        <div className='main-body'>
+            <section className='intro'>
+                <div className="container">
+                    <h2>
+                        A lifestyle and clothing brand that manifests leaders by surrounding them with
+                        other seasoned leaders. More than just a community, but friends, brothers,
+                        sisters, familia.<br/>
+                        <span>Somos sangre.</span>
+                    </h2>
+                </div>
+            </section>
+            <section className="latest">
+                <div className="container">
+                    <h3>Latest Shit</h3>
+                    <div className="latest-cont">
+                        <div className="latest-item">
+                            <div className="item-image-cont">
+                                <img src="https://static.pullandbear.net/2/photos//2021/I/0/2/p/9247/599/505/9247599505_2_6_8.jpg?t=1624281688603&imwidth=850" alt=""/>
+                                <div className="item-image-shadow"></div>
+                            </div>
+                            <h4>Sick Ass Tee</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                        <div className="latest-item">
+                            <div className="item-image-cont">
+                                <img src="https://static.pullandbear.net/2/photos//2021/I/0/2/p/9247/599/505/9247599505_2_6_8.jpg?t=1624281688603&imwidth=850" alt=""/>
+                                <div className="item-image-shadow"></div>
+                            </div>
+                            <h4>Sick Ass Tee</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                        <div className="latest-item">
+                            <div className="item-image-cont">
+                                <img src="https://static.pullandbear.net/2/photos//2021/I/0/2/p/9247/599/505/9247599505_2_6_8.jpg?t=1624281688603&imwidth=850" alt=""/>
+                                <div className="item-image-shadow"></div>
+                            </div>
+                            <h4>Sick Ass Tee</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="quality">
+                    <div className="text-box">
+                    <h3>The Quality of Products: The Shit</h3>
+                    <h6>Yeah it's pretty great quality</h6>
+                    <p>We understand our customer base aren't made of millionaires yet(we aren't either). We have dedicated our resources to assure that the customer gets the best quality for the lowest price. </p>
+                    </div>
+                    <div className="image-box">
+                        <img src="https://static.pullandbear.net/2/photos//2021/I/0/2/p/9247/599/800/9247599800_2_8_8.jpg?t=1624281688830&imwidth=1440" alt="" />
+                    </div>
+            </section>
+            <section className="val-props">
+            <div className="container">
+                    <div className="val-prop-cont">
+                        <div className="val-prop">
+                            <div className="val-prop-icon">
+                                <img src="https://res.cloudinary.com/izzyhv/image/upload/v1624746430/ecommerce/ACND/hecho-en-mexico-2_c0vlrc.svg" alt=""/>
+                            </div>
+                            <h4>Made in Mexico</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                        <div className="val-prop">
+                            <div className="val-prop-icon">
+                            <FontAwesomeIcon icon={faMoneyBillWave}/>
+                            </div>
+                            <h4>Bang for your buck</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                        <div className="val-prop">
+                            <div className="val-prop-icon">
+                            <FontAwesomeIcon icon={faShippingFast}/>
+                            </div>
+                            <h4>Shipping is rapido</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio incidunt
+                                dolorum fugit harum quod molestias repellat. Nam quibusdam aliquam aperiam
+                                nostrum corrupti!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="cta-products">
+                <div className="container">
+                    <h3>"You will look at the products and buy something" <br/>- Obiwan (probably)</h3>
+                    <p>something about how awesome this website looks and how much it inspired you to buy it all.</p>
+                    <Link to='/products'>
+                        <button className='cta'>Products</button>
+                    </Link>
+                </div>
+            </section>
         </div>
+        <section className='fill this in with blog or something'></section>
     </div>
 
 };

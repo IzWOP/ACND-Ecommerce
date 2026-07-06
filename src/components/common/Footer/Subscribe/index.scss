@@ -1,0 +1,236 @@
+$gray: #bbbbbb;
+$green: #1ECD97;
+@import '../../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import "../../../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import '../../../../stylesheets/mixins.scss';
+.subscribe {
+    // background-image: url('https://res.cloudinary.com/izzyhv/image/upload/q_auto,f_auto/v1/ecommerce/ACND/deads.jpg');
+    background-image: url('https://picsum.photos/1600/2000');
+    background-position: 50% 25%;
+    background-size: cover;
+    height: 300px;
+    color: #fff;
+    display: grid;
+    position: relative;
+    grid-template-columns: [full-start]minmax(30px, 30px) [center-start] repeat(8, minmax(min-content, 1fr)) [center-end] minmax(30px, 30px)[full-end];
+    @include breakpoint(lg) {
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 150px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+    }
+    @include breakpoint(xl) {
+        grid-template-columns: [full-start]minmax(30px, 30px) 1fr [center-start] repeat(8, minmax(min-content, 180px)) [center-end] 1fr minmax(30px, 30px)[full-end];
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-image: linear-gradient(to left, rgba(0, 0, 0, .4), rgba(0, 0, 0, .4));
+        z-index: 0;
+    }
+    .background {
+        -webkit-backdrop-filter:saturate(180%) blur(10px);
+        backdrop-filter: saturate(180%) blur(5px);
+        position: absolute;
+        width: 100vw;
+        height: 100%;
+    }
+    .container {
+        z-index: 1;
+        display: inherit;
+        grid-column: center-start/center-end;
+        @include breakpoint(lg){
+            grid-column: 4/10;
+
+        }
+        // justify-content: space-between;
+        h5 {
+            font-size: 1.5rem;
+            line-height: 1.5em;
+            font-weight: normal;
+            // margin-right: 5rem;
+            grid-column: 1/-1;
+            text-align: center;
+            margin: auto 0 1rem 0;
+            @include breakpoint(md) {
+                margin: auto 0;
+                text-align: left;
+                font-size: 1.7rem;
+                grid-column: 1/4;
+            }
+
+        }
+    }
+    form {
+        grid-column: 1/-1;
+        display: inherit;
+        justify-items: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 0 0 2rem 0;
+        opacity: 1;
+        transition: opacity 0.3s linear;
+        @include breakpoint(md) {
+            // justify-items: end;
+            max-width: 500px;
+            justify-self: end;
+            grid-column: 4/8;
+            margin: 0;
+
+            display: flex;
+            flex-direction: row;
+        }
+        .form-item {
+            padding: 10px 18px 10px 5px;
+            max-width: 250px;
+            width: 100%;
+            font-size: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            text-indent: 1rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            @include breakpoint(md){
+                margin-bottom: .5rem;
+
+            }
+            &:focus {
+                outline: none;
+                background-color: #fff;
+            }
+            &:focus-visible {
+                outline: none;
+                background-color: transparent;
+            }
+            &:-internal-autofill-selected {
+                background-color: transparent !important;
+            }
+            &::placeholder {
+                color: #ededed;
+                margin-left: 0;
+                padding-left: 0;
+            }
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:active,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:hover {
+            -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+        }
+        p {
+            margin-top: -.8rem;
+            color: #bf1650;
+            font-weight: 400;
+        }
+
+        p::before {
+            display: inline;
+            content: "⚠ ";
+        }
+        .submit {
+            max-width: 400px;
+            border-radius: 20px;
+        }
+        .active {
+            display: block;
+        }
+        .d-none {
+            display: none;
+        }
+
+    }
+    .submit {
+        outline: none;
+        height: 40px;
+        text-align: center;
+        width: 130px;
+        border-radius: 40px;
+        background: transparent;
+        border: 2px solid #fff;
+        color: #fff;
+        letter-spacing: 1px;
+        text-shadow: 0;
+        @include breakpoint(md){
+            margin-left: 2rem;
+        }
+        font: {
+            size: 12px;
+            weight: bold;
+        }
+        cursor: pointer;
+        transition: all 0.25s ease;
+        &:hover {
+            color: white;
+            background: #000;
+        }
+        &:active {
+            //letter-spacing: 2px;
+            letter-spacing: 2px;
+        }
+        &:after {
+            content: "SUBMIT";
+        }
+    }
+    .clicked {
+        width: 40px;
+        border-color: $gray;
+        border-width: 3px;
+        font-size: 0;
+        border-left-color: #FF0000;
+        animation: rotating 2s 0.25s linear infinite;
+        &:after {
+            content: "";
+        }
+        &:hover {
+            color: #FF0000;
+            background: white;
+        }
+    }
+    .validate {
+        font-size: 13px;
+        color: white;
+        background: #000;
+        @extend %fa-icon;
+        @extend .fas;
+        &:after {
+            @extend %fa-icon;
+            @extend .fas;
+            font-family: "Font Awesome 5 Free";
+            content: fa-content($fa-var-check);
+        }
+    }
+    .error {
+        font-size: 13px;
+        color: white;
+        background: red;
+        @extend %fa-icon;
+        @extend .fas;
+        &:after {
+            @extend %fa-icon;
+            @extend .fas;
+            font-family: "Font Awesome 5 Free";
+            content: fa-content($fa-var-times);
+        }
+    }
+    .hide {
+        opacity: 0 !important;
+        transition: opacity 0.3s linear;
+    }
+    .email-status {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

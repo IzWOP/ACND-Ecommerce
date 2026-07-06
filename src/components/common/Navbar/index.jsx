@@ -1,7 +1,34 @@
-import React from 'react';
+import React,{useLayoutEffect,useState} from 'react';
 
-const Navbar = () =>{
-return <h1>navbar</h1>
+import NavMobile from './NavMobile';
+import NavDesk from './NavDesk';
+
+
+//stylesheets
+import './index.scss'
+
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
+
+const Navbar = () => {
+
+    const [width] = useWindowSize();
+        if(width <= 960 ){
+            return <NavMobile />;
+        } else {
+            return <NavDesk />;
+         }
+      
 }
 
 export default Navbar;

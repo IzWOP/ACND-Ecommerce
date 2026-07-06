@@ -1,11 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {Link} from 'react-router-dom';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+//componenets import
+//double check this one
+// import { ForgotPassword } from 'aws-amplify-react';
+import ForgotPassword from './ForgotPassword';
+
+
+//style
+import './index.scss';
+
 //yup schema
-const signInSchema = yup
+const loginSchema = yup
     .object()
     .shape({
         email: yup
@@ -18,15 +27,18 @@ const signInSchema = yup
     });
 
 
-const SignIn = (props) => {
-    const {register, handleSubmit, errors} = useForm({resolver: yupResolver(signInSchema)});
+const Login = (props) => {
+    const {register, handleSubmit, errors} = useForm({resolver: yupResolver(loginSchema)});
     const onSubmitSignIn = (formData) => {
-        console.log(formData, 'signin');
+        console.log(formData, 'Login');
         console.log(formData.email)
 
-        // async function signIn() {     try {         const user = await
-        // Auth.signIn(username, password);     } catch (error) { console.log('error
-        // signing in', error);     } } signIn();
+        // async function signIn() {   
+        // try {         
+        // const user = await Auth.signIn(username, password);    
+        // } catch (error) { console.log('error signing in', error);     
+        // } } 
+        // signIn();
     }
     return <section className="form-login">
         {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
@@ -51,4 +63,4 @@ const SignIn = (props) => {
     </section>
 }
 
-export default SignIn;
+export default Login;
